@@ -1,0 +1,8 @@
+{
+  "name": "ramble",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "acad61f7"
+}
