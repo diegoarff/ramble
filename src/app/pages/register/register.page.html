@@ -9,6 +9,11 @@
     label="Name"
     labelPlacement="floating"
     type="text"
+    ngModel
+    required
+    maxlength="15"
+    name="name"
+    errorText="Invalid name"
   ></ion-input>
 
   <ion-input
@@ -16,6 +21,11 @@
     label="Username"
     labelPlacement="floating"
     type="text"
+    ngModel
+    required
+    maxlength="15"
+    name="username"
+    errorText="Invalid username"
   ></ion-input>
 
   <ion-input
@@ -33,6 +43,13 @@
     label="Password"
     labelPlacement="floating"
     type="password"
+    ngModel
+    required
+    minlength="6"
+    maxlength="15"
+    [counter]="true"
+    name="password"
+    errorText="Invalid password"
   ></ion-input>
 
   <ion-input
@@ -40,6 +57,13 @@
     label="Confirm Password"
     labelPlacement="floating"
     type="password"
+    ngModel
+    required
+    minlength="6"
+    maxlength="15"
+    [counter]="true"
+    name="confirmPassword"
+    errorText="Invalid password"
   ></ion-input>
 
   <ion-textarea
@@ -48,6 +72,10 @@
     labelPlacement="floating"
     [counter]="true"
     maxlength="50"
+    ngModel
+    required
+    name="biography"
+    errorText="Biography is required"
   ></ion-textarea>
 </ion-content>
 <ion-button (click)="register()">Register</ion-button>
