@@ -3,6 +3,52 @@
     <ion-title>register</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding">
+  <ion-input
+    fill="solid"
+    label="Name"
+    labelPlacement="floating"
+    type="text"
+  ></ion-input>
 
-<ion-button (click)="register()">Login</ion-button>
+  <ion-input
+    fill="solid"
+    label="Username"
+    labelPlacement="floating"
+    type="text"
+  ></ion-input>
+
+  <ion-input
+    fill="solid"
+    label="Email"
+    labelPlacement="floating"
+    type="email"
+    errorText="Invalid email"
+    ngModel
+    email
+  ></ion-input>
+
+  <ion-input
+    fill="solid"
+    label="Password"
+    labelPlacement="floating"
+    type="password"
+  ></ion-input>
+
+  <ion-input
+    fill="solid"
+    label="Confirm Password"
+    labelPlacement="floating"
+    type="password"
+  ></ion-input>
+
+  <ion-textarea
+    fill="solid"
+    label="Biography"
+    labelPlacement="floating"
+    [counter]="true"
+    maxlength="50"
+  ></ion-textarea>
+</ion-content>
+<ion-button (click)="register()">Register</ion-button>
 <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>

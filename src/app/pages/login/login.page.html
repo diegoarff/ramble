@@ -4,5 +4,11 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content class="ion-padding">
+    <ion-input fill="solid" label="Username" labelPlacement="floating" type="text"></ion-input>
+    <ion-input fill="solid" label="Password" labelPlacement="floating" type="password"></ion-input>
+</ion-content>
+
+
 <ion-button (click)="login()">Login</ion-button>
 <p>Don't have an account? <a [routerLink]="['/register']">Register</a></p>
