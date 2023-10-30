@@ -3,13 +3,16 @@
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="ion-padding">
+<form (submit)="login()"  #loginForm="ngForm">
+
+
   <ion-input
     fill="solid"
     label="Username"
     labelPlacement="floating"
     type="text"
+    [(ngModel)]="data.username"
     ngModel
     required
     maxlength="15"
@@ -21,6 +24,7 @@
     label="Password"
     labelPlacement="floating"
     type="password"
+    [(ngModel)]="data.password"
     ngModel
     required
     minlength="6"
@@ -29,7 +33,9 @@
     name="password"
     errorText="Invalid password"
   ></ion-input>
+
+<ion-button type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+</form>
 </ion-content>
 
-<ion-button (click)="login()">Login</ion-button>
 <p>Don't have an account? <a [routerLink]="['/register']">Register</a></p>

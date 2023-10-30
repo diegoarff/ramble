@@ -4,11 +4,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
+  <form (submit)="register()" #registerForm="ngForm">
   <ion-input
     fill="solid"
     label="Name"
     labelPlacement="floating"
     type="text"
+    [(ngModel)]="data.name"
     ngModel
     required
     maxlength="15"
@@ -21,6 +23,7 @@
     label="Username"
     labelPlacement="floating"
     type="text"
+    [(ngModel)]="data.username"
     ngModel
     required
     maxlength="15"
@@ -33,9 +36,11 @@
     label="Email"
     labelPlacement="floating"
     type="email"
+    [(ngModel)]="data.email"
     errorText="Invalid email"
     ngModel
     email
+    name="email"
   ></ion-input>
 
   <ion-input
@@ -43,6 +48,7 @@
     label="Password"
     labelPlacement="floating"
     type="password"
+    [(ngModel)]="data.password"
     ngModel
     required
     minlength="6"
@@ -57,6 +63,7 @@
     label="Confirm Password"
     labelPlacement="floating"
     type="password"
+    [(ngModel)]="data.confirm_password"
     ngModel
     required
     minlength="6"
@@ -72,11 +79,13 @@
     labelPlacement="floating"
     [counter]="true"
     maxlength="50"
+    [(ngModel)]="data.biography"
     ngModel
     required
     name="biography"
     errorText="Biography is required"
   ></ion-textarea>
+<ion-button type="submit" [disabled]="registerForm.invalid || !passwordMatch()" >Register</ion-button>
+</form>
 </ion-content>
-<ion-button (click)="register()">Register</ion-button>
 <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
