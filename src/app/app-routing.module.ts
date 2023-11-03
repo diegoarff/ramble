@@ -24,6 +24,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
   },
+  {
+    path: 'create-tweet',
+    loadChildren: () => import('./pages/create-tweet/create-tweet.module').then( m => m.CreateTweetPageModule)
+  },
+
 ];
 @NgModule({
   imports: [
