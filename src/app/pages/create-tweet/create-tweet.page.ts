@@ -28,6 +28,12 @@ export class CreateTweetPage implements OnInit {
       console.log('image: ', image);
        this.image = image.dataUrl;
       const blob = this.dataURLtoBlob(image.dataUrl);
+      console.log('blob: ', blob.size);
+      // si la imagen es mayor a 10mb no se sube
+      if(blob.size > (10 * 1024 * 1024)) {
+        console.log('Image is too large');
+        return;
+      }
       const url = await this.uploadImage(blob, image);
       console.log(url);
       // const response = await this.addDocument('test', { imageUrl: url });
