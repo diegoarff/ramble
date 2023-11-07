@@ -1,0 +1,53 @@
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 500px;
+    background-color: 'red';
+    background-color: rgb(73, 12, 45);
+    color: white;
+}
+
+.avatar {
+    height: 50px;
+    width: 75px;
+    margin-right: 20px;
+}
+.sercondContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+title{
+    font-size: 30px;
+}
+.content {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+
+.icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon ion-text {
+    margin-left: 10px;
+}
+
+.image {
+    width: 400px;
+    margin-top: 40px;
+}
