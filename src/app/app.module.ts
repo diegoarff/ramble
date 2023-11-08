@@ -14,6 +14,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { SharedServicesModule } from './services/shared-services.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     provideFirestore(() => getFirestore()),
     SharedServicesModule,
     HttpClientModule,
+    IonicStorageModule.forRoot(),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

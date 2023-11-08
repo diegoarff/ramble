@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface RegisterData {
   name: string;
@@ -16,7 +17,7 @@ interface RegisterData {
 })
 export class RegisterPage implements OnInit {
   private router = inject(Router);
-  data: RegisterData = {
+  data = {
     name: '',
     username: '',
     email: '',
@@ -24,7 +25,10 @@ export class RegisterPage implements OnInit {
     confirm_password: '',
     biography: '',
   };
-  constructor() {}
+  constructor(
+    private user: FormData,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {}
 
@@ -32,6 +36,16 @@ export class RegisterPage implements OnInit {
     return this.data.password === this.data.confirm_password;
   }
   register() {
-    console.log(this.data);
+    this.user.append('name', this.data.name); 
+    this.user.append('username', this.data.username); 
+    this.user.append('email', this.data.email);
+    this.user.append('password', this.data.password);
+    this.user.append('confirm_password', this.data.confirm_password);
+    this.user.append('biography', this.data.biography);
+
+    this.authService.signup(this.user).subscribe((res) => {
+    console.log(res);
+  })
   }
+
 }
