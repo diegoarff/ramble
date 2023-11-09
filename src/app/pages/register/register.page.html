@@ -4,88 +4,99 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <form (submit)="register()" #registerForm="ngForm">
-  <ion-input
-    fill="solid"
-    label="Name"
-    labelPlacement="floating"
-    type="text"
-    [(ngModel)]="data.name"
-    ngModel
-    required
-    maxlength="15"
-    name="name"
-    errorText="Invalid name"
-  ></ion-input>
+  <form (ngSubmit)="register()" [formGroup]="registerForm">
+    <ion-input
+      fill="solid"
+      label="Name"
+      labelPlacement="floating"
+      type="text"
+      formControlName="name"
+    ></ion-input>
+    <ion-note
+      *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('name') }}
+    </ion-note>
 
-  <ion-input
-    fill="solid"
-    label="Username"
-    labelPlacement="floating"
-    type="text"
-    [(ngModel)]="data.username"
-    ngModel
-    required
-    maxlength="15"
-    name="username"
-    errorText="Invalid username"
-  ></ion-input>
+    <ion-input
+      fill="solid"
+      label="Username"
+      labelPlacement="floating"
+      type="text"
+      formControlName="username"
+    ></ion-input>
+    <ion-note
+      *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('username') }}
+    </ion-note>
 
-  <ion-input
-    fill="solid"
-    label="Email"
-    labelPlacement="floating"
-    type="email"
-    [(ngModel)]="data.email"
-    errorText="Invalid email"
-    ngModel
-    email
-    name="email"
-  ></ion-input>
+    <ion-input
+      fill="solid"
+      label="Email"
+      labelPlacement="floating"
+      type="email"
+      formControlName="email"
+    ></ion-input>
+    <ion-note
+      *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('email') }}
+    </ion-note>
 
-  <ion-input
-    fill="solid"
-    label="Password"
-    labelPlacement="floating"
-    type="password"
-    [(ngModel)]="data.password"
-    ngModel
-    required
-    minlength="6"
-    maxlength="15"
-    [counter]="true"
-    name="password"
-    errorText="Invalid password"
-  ></ion-input>
+    <ion-input
+      fill="solid"
+      label="Password"
+      labelPlacement="floating"
+      type="password"
+      maxlength="15"
+      [counter]="true"
+      formControlName="password"
+    ></ion-input>
+    <ion-note
+      *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('password') }}
+    </ion-note>
 
-  <ion-input
-    fill="solid"
-    label="Confirm Password"
-    labelPlacement="floating"
-    type="password"
-    [(ngModel)]="data.confirm_password"
-    ngModel
-    required
-    minlength="6"
-    maxlength="15"
-    [counter]="true"
-    name="confirmPassword"
-    errorText="Invalid password"
-  ></ion-input>
+    <ion-input
+      fill="solid"
+      label="Confirm Password"
+      labelPlacement="floating"
+      type="password"
+      maxlength="15"
+      [counter]="true"
+      formControlName="confirm_password"
+    ></ion-input>
+    <ion-note
+      *ngIf="registerForm.get('confirm_password')?.invalid && registerForm.get('confirm_password')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('confirm_password') }}
+    </ion-note>
 
-  <ion-textarea
-    fill="solid"
-    label="Biography"
-    labelPlacement="floating"
-    [counter]="true"
-    maxlength="50"
-    [(ngModel)]="data.biography"
-    ngModel
-    required
-    name="biography"
-    errorText="Biography is required"
-  ></ion-textarea>
-<ion-button type="submit" [disabled]="registerForm.invalid || !passwordMatch()" >Register</ion-button>
-</form>
+    <ion-textarea
+      fill="solid"
+      label="Biography"
+      labelPlacement="floating"
+      [counter]="true"
+      maxlength="160"
+      formControlName="bio"
+    ></ion-textarea>
+    <ion-note
+      *ngIf="registerForm.get('bio')?.invalid && registerForm.get('bio')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('bio') }}
+    </ion-note>
+
+    <ion-button type="submit" [disabled]="registerForm.invalid"
+      >Register</ion-button
+    >
+  </form>
 </ion-content>
 <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
