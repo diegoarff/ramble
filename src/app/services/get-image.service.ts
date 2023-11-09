@@ -20,14 +20,15 @@ export class GetImageService {
         quality: 90,
         // allowEditing: false,
         source: CameraSource.Prompt,
-        width: 600,
+        width: 400,
+        height: 400,
         resultType: CameraResultType.DataUrl
       });
       console.log('image: ', image);
       const blob = this.dataURLtoBlob(image.dataUrl);
       console.log('blob: ', blob.size);
       // si la imagen es mayor a 10mb no se sube
-      if(blob.size > (10 * 1024 * 1024)) {
+      if(blob.size > (1.2 * 1024 * 1024)) {
         console.log('Image is too large');
         return undefined;
       }

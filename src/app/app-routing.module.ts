@@ -26,8 +26,13 @@ const routes: Routes = [
   },
   {
     path: 'create-tweet',
-    loadChildren: () => import('./pages/create-tweet/create-tweet.module').then( m => m.CreateTweetPageModule)
+    loadChildren: () => import('./pages/rambles/create-tweet/create-tweet.module').then( m => m.CreateTweetPageModule)
   },
+  {
+    path: 'ramble-views',
+    loadChildren: () => import('./pages/rambles/ramble-views/ramble-views.module').then( m => m.RambleViewsPageModule)
+  },
+
 
 ];
 @NgModule({
