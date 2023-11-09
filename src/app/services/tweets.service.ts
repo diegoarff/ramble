@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import {
   ITweetResponse,
   ITweetArrayResponse,
@@ -15,51 +15,51 @@ export class TweetsService {
   http = inject(HttpClient);
   baseUrl = 'http://localhost:3000/tweets';
 
-  getTweet(tweetId: string): Observable<ITweetResponse> {
-    return this.http.get<ITweetResponse>(`${this.baseUrl}/${tweetId}`);
+  async getTweet(tweetId: string): Promise<ITweetResponse> {
+    return lastValueFrom(this.http.get<ITweetResponse>(`${this.baseUrl}/${tweetId}`));
   }
 
-  createTweet(tweet: FormData): Observable<ITweetBasicResponse> {
-    return this.http.post<ITweetBasicResponse>(`${this.baseUrl}`, tweet);
+  async createTweet(tweet: FormData): Promise<ITweetBasicResponse> {
+    return lastValueFrom(this.http.post<ITweetBasicResponse>(`${this.baseUrl}`, tweet));
   }
 
-  updateTweet(
+  async updateTweet(
     tweetId: string,
     tweet: FormData
-  ): Observable<ITweetBasicResponse> {
-    return this.http.put<ITweetBasicResponse>(
+  ): Promise<ITweetBasicResponse> {
+    return lastValueFrom(this.http.put<ITweetBasicResponse>(
       `${this.baseUrl}/${tweetId}`,
       tweet
-    );
+    ));
   }
 
-  deleteTweet(tweetId: string): Observable<ITweetBasicResponse> {
-    return this.http.delete<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`);
+  async deleteTweet(tweetId: string): Promise<ITweetBasicResponse> {
+    return lastValueFrom(this.http.delete<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`));
   }
 
-  replyToTweet(
+  async replyToTweet(
     tweetId: string,
     tweet: FormData
-  ): Observable<ITweetBasicResponse> {
-    return this.http.post<ITweetBasicResponse>(
+  ): Promise<ITweetBasicResponse> {
+    return lastValueFrom(this.http.post<ITweetBasicResponse>(
       `${this.baseUrl}/${tweetId}/reply`,
       tweet
-    );
+    ));
   }
 
-  likeTweet(tweetId: string): Observable<IResponse> {
-    return this.http.post<IResponse>(`${this.baseUrl}/${tweetId}/like`, {});
+  async likeTweet(tweetId: string): Promise<IResponse> {
+    return lastValueFrom(this.http.post<IResponse>(`${this.baseUrl}/${tweetId}/like`, {}));
   }
 
-  getRepliesFromTweet(
+  async getRepliesFromTweet(
     tweetId: string,
     queryParams?: any
-  ): Observable<ITweetArrayResponse> {
+  ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(
+    return lastValueFrom(this.http.get<ITweetArrayResponse>(
       `${this.baseUrl}/${tweetId}/replies`,
       { params }
-    );
+    ));
   }
 
   async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
@@ -71,51 +71,51 @@ export class TweetsService {
     );
   }
 
-  getFollowingTweets(queryParams?: any): Observable<ITweetArrayResponse> {
+  async getFollowingTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(`${this.baseUrl}/following`, {
+    return lastValueFrom(this.http.get<ITweetArrayResponse>(`${this.baseUrl}/following`, {
       params,
-    });
+    }));
   }
 
-  getTweetsFromUser(
+  async getTweetsFromUser(
     userId: string,
     queryParams?: any
-  ): Observable<ITweetArrayResponse> {
+  ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(
+    return lastValueFrom( this.http.get<ITweetArrayResponse>(
       `${this.baseUrl}/user/${userId}`,
       { params }
-    );
+    ));
   }
 
-  getReplyTweetsFromUser(
+  async getReplyTweetsFromUser(
     userId: string,
     queryParams?: any
-  ): Observable<ITweetArrayResponse> {
+  ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(
+    return lastValueFrom(this.http.get<ITweetArrayResponse>(
       `${this.baseUrl}/user/${userId}/replies`,
       { params }
-    );
+    ));
   }
 
-  getLikedTweetsFromUser(
+  async getLikedTweetsFromUser(
     userId: string,
     queryParams?: any
-  ): Observable<ITweetArrayResponse> {
+  ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(
+    return lastValueFrom(this.http.get<ITweetArrayResponse>(
       `${this.baseUrl}/user/${userId}/likes`,
       { params }
-    );
+    ));
   }
 
-  searchTweets(queryParams?: any): Observable<ITweetArrayResponse> {
+  async searchTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(`${this.baseUrl}/search`, {
+    return lastValueFrom(this.http.get<ITweetArrayResponse>(`${this.baseUrl}/search`, {
       params,
-    });
+    }));
   }
 
   private constructQueryParams(queryParams: any): HttpParams {

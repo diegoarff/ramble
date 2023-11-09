@@ -10,33 +10,6 @@ import { Preferences } from '@capacitor/preferences';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-<<<<<<< HEAD
-  private router = inject(Router);
-  private localstorage = inject(LocalstorageService);
-
-   username: string = "";
-   password: string = "";
-  constructor(
-    private authService: AuthService,
-  ) {}
-  data = new FormData();
-  ngOnInit() {}
-  
-  login() {
-    // this.data.append('username', this.username);
-    // this.data.append('password', this.password);
-    // this.authService.signin(this.data).subscribe((res) => {
-    //   console.log(res);
-    //   if (res.status == "success") {
-    //     if (res.message == "User logged in"){
-    //       this.localstorage.set('token', res.data.token);
-          this.router.navigate(['/tabs'], {state: {data: "hello", data2: "world"}});
-    //     }
-    //   }
-    // });
-    
-    //this.router.navigate(['/tabs']);
-=======
   loginForm: FormGroup = new FormGroup({});
 
   private router = inject(Router);
@@ -79,22 +52,19 @@ export class LoginPage implements OnInit {
     });
   }
 
-  login() {
+  async login() {
     if (this.loginForm.invalid) {
       return;
     }
 
     console.log(this.loginForm.value);
 
-    this.authService.signin(this.loginForm.value).subscribe({
-      next: async (res) => {
-        console.log(res);
-        if (res.status == 'success') {
-          await Preferences.set({ key: 'token', value: res.data.token });
-          this.router.navigate(['/tabs']);
-        }
-      },
-    });
+  const res = await  this.authService.signin(this.loginForm.value)
+
+  if (res.status == 'success') {
+    await Preferences.set({ key: 'token', value: res.data.token });
+    this.router.navigate(['/tabs']);
+  }
   }
 
   getErrorMessage(controlName: string) {
@@ -107,6 +77,5 @@ export class LoginPage implements OnInit {
       }
     }
     return '';
->>>>>>> c68042c6e42dcc357b267600253f202cebc14270
   }
 }

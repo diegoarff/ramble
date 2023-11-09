@@ -98,19 +98,18 @@ export class RegisterPage implements OnInit {
   //   return this.registerForm.get('password') === this.registerForm.get('confirm_password');
   // }
 
-  register() {
+  async  register() {
     if (this.registerForm.invalid) {
       return;
     }
 
     console.log(this.registerForm.value);
 
-    this.authService.signup(this.registerForm.value).subscribe((res) => {
-      console.log(res);
-      if (res.status == 'success') {
-        this.router.navigate(['/login']);
-      }
-    });
+
+    const res = await this.authService.signup(this.registerForm.value)
+    if (res.status == 'success') {
+      this.router.navigate(['/login']);
+    }
   }
 
   getErrorMessage(controlName: string) {

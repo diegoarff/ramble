@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { TweetsService } from 'src/app/services/tweets.service';
-import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-tab1',

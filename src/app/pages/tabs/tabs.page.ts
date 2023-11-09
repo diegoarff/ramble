@@ -10,6 +10,6 @@ export class TabsPage {
   private router = inject(Router);
   constructor() {}
 ngOnInit() {
-console.log(this.router.getCurrentNavigation()!.extras.state!);
+
 }
 }
