@@ -1,53 +1,115 @@
-.container {
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 500px;
-    background-color: 'red';
-    background-color: rgb(73, 12, 45);
-    color: white;
-}
+// <div class="tweet-container">
+// <div class="tweet-header">
+//   <div class="tweet-header-avatar">
+//     <img src="{{ tweet.user[0].avatar }}" />
+//   </div>
+//   <div class="tweet-header-name">
+//     <ion-text>
+//       <b>{{ tweet.user[0].name }}</b>
+//     </ion-text>
+//     <ion-text>
+//       <span> #{{ tweet.user[0].username }}</span>
+//     </ion-text>
+//   </div>
+// </div>
+// <div class="tweet-content">
+//   <ion-text>{{ tweet.content }}</ion-text>
+//   <img *ngIf="tweet.image" class="image" [src]="tweet.image" />
+// </div>
+// <div class="tweet-footer">
+//   <div class="tweet-footer-icon">
+//     <ion-icon name="chatbubble-outline"></ion-icon>
+//     <ion-text>{{ tweet.replyCount }}</ion-text>
+//   </div>
+//   <div class="tweet-footer-icon">
+//     <ion-icon name="heart-outline"></ion-icon>
+//     <ion-text>{{ tweet.likeCount }}</ion-text>
+//   </div>
+// </div>
+// </div>
 
-.avatar {
-    height: 50px;
-    width: 75px;
-    margin-right: 20px;
-}
-.sercondContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-title{
-    font-size: 30px;
-}
-.content {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.button{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 40px;
-}
+.tweet-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 0 10px;
+  border-bottom: 1px solid #333333;
+  margin-bottom: 10px;
 
-
-.icon {
+  .tweet-header {
     display: flex;
-    flex-direction: row;
     align-items: center;
-}
+    margin-bottom: 10px;
 
-.icon ion-text {
-    margin-left: 10px;
-}
+    .tweet-header-avatar {
+      margin-right: 10px;
 
-.image {
-    width: 400px;
-    margin-top: 40px;
+      img {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+      }
+    }
+
+    .tweet-header-name {
+      display: flex;
+      align-items: center;
+      .tweet-name {
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .tweet-username {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+
+  .tweet-content {
+    ion-text {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .image {
+      max-width: 100%;
+      max-height: 500px;
+      margin-top: 10px;
+      border-radius: 16px;
+    }
+  }
+
+  .tweet-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .tweet-footer-buttons {
+    display: flex;
+    gap: 24px;
+
+    .tweet-footer-icon {
+      display: flex;
+      align-items: center;
+      color: #666;
+
+      ion-icon {
+        margin-right: 5px;
+        font-size: 20px;
+      }
+
+      ion-text {
+        font-size: 14px;
+      }
+    }
+  }
 }

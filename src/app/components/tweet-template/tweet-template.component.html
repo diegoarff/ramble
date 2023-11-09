@@ -1,33 +1,105 @@
-<div class="container">
-  <ion-avatar class="avatar">
-   <img alt="Silhouette of a person's head"
-   src="https://firebasestorage.googleapis.com/v0/b/ramble-322a6.appspot.com/o/test%2F1698975678282.jpeg?alt=media&token=c9a7b759-be64-4a3e-aa5b-b932c7b7159f&_gl=1*1loaemh*_ga*MTAzNzE3NTA2MC4xNjk0NDY1Njc2*_ga_CW55HF8NVT*MTY5OTMyMjM4MS44LjEuMTY5OTMyMjQyNi4xNS4wLjA."
-   />
-  </ion-avatar>
-  <div class="secondContainer">
-  <div class="title">
-    <ion-text><b>Name</b></ion-text>
-    <ion-text color="medium">  </ion-text>
-  </div>
-  <div class="content">
-    <ion-text> lakdmalkdsmal
-      askamdlamdlsdffddsfdfgdgdfdgfdgdggf
-      dfdfdfggfdgf
-    </ion-text>
-    <img *ngIf="image.length > 0" class="image" alt="Silhouette of mountains" [src]="image" />
-  </div>
-  <div class="button">
-    <div class="icon">
-      <ion-icon name="heart-outline" size="large"></ion-icon>
-      <ion-text> 0 </ion-text> 
+<div class="tweet-container">
+  <div class="tweet-header">
+    <div class="tweet-header-avatar">
+      <img src="{{ tweet.user[0].avatar }}" />
     </div>
-    <div class="icon">
-      <ion-icon name="chatbubble-outline" size="large"></ion-icon>
-      <ion-text> 0 </ion-text>
+    <div class="tweet-header-name">
+      <p class="tweet-name">{{ tweet.user[0].name }}</p>
+      <p class="tweet-username">#{{ tweet.user[0].username }}</p>
     </div>
-    
-  </div> 
   </div>
-  
-
+  <div class="tweet-content">
+    <ion-text>{{ tweet.content }}</ion-text>
+    <div class="image-container" *ngIf="tweet.image">
+      <img class="image" [src]="tweet.image" />
+    </div>
+  </div>
+  <div class="tweet-footer">
+    <div class="tweet-footer-buttons">
+      <div class="tweet-footer-icon">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+        <ion-text>{{ tweet.replyCount }}</ion-text>
+      </div>
+      <div class="tweet-footer-icon">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-text>{{ tweet.likeCount }}</ion-text>
+      </div>
+    </div>
+    <div class="tweet-footer-date">
+      <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+    </div>
+  </div>
 </div>
+
+<!-- <ion-row class="wrapper"> -->
+
+<!-- <ion-col size="12">
+    <ion-row>
+      <ion-col size="2">
+        <ion-avatar class="avatar">
+          <img src="{{ tweet.user[0].avatar }} " />
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="10">
+        <ion-text>
+          <b>{{ tweet.user[0].name }}</b>
+        </ion-text>
+        <ion-text>
+          <span> #{{ tweet.user[0].username }}</span>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-text>{{ tweet.content }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="tweet.image">
+      <ion-col size="12">
+        <img class="image" [src]="tweet.image" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+        <ion-text>{{ tweet.replyCount }}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-text>{{ tweet.likeCount }}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row> -->
+
+<!-- <div class="container">
+  <div class="secondContainer">
+    <div class="title">
+      <ion-text
+        ><b>{{ tweet.user[0].name }}</b></ion-text
+      >
+      <ion-text color="medium"> </ion-text>
+    </div>
+    <div class="content">
+      <ion-text>
+        {{ tweet.content }}
+      </ion-text>
+      <img *ngIf="tweet.image" class="image" [src]="tweet.image" />
+    </div>
+    <div class="button">
+      <div class="icon">
+        <ion-icon name="heart-outline" size="large"></ion-icon>
+        <ion-text>{{ tweet.likeCount }}</ion-text>
+      </div>
+      <div class="icon">
+        <ion-icon name="chatbubble-outline" size="large"></ion-icon>
+        <ion-text> {{ tweet.replyCount }} </ion-text>
+      </div>
+    </div>
+  </div>
+</div> -->

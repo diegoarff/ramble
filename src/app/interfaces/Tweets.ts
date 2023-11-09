@@ -1,6 +1,6 @@
-import { IResponse } from "./Utils";
+import { IResponse } from './Utils';
 
-export interface ITweetResponse extends IResponse{
+export interface ITweetResponse extends IResponse {
   data: ITweet;
 }
 
@@ -17,7 +17,7 @@ export interface ITweetBasicResponse extends IResponse {
     isEdited: boolean;
     createdAt: string;
     updatedAt: string;
-    userId: string
+    userId: string;
   };
 }
 
@@ -28,12 +28,14 @@ export interface ITweet {
   isReplyTo: string | null;
   isEdited: boolean;
   createdAt: string;
-  user: {
-    _id: string;
-    username: string;
-    name: string;
-    avatar: string;
-  }
+  user: [
+    {
+      _id: string;
+      username: string;
+      name: string;
+      avatar: string;
+    }
+  ];
   liked: boolean;
   likeCount: number;
   replyCount: number;
