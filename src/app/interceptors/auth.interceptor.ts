@@ -1,43 +1,36 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { LocalstorageService } from '../services/localstorage.service';
+import { from, lastValueFrom } from 'rxjs';
+import { Preferences } from '@capacitor/preferences';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private localstorage = inject(LocalstorageService);
   constructor() {}
 
   private authEndpoints = ['/tweets', '/users']; // Add more endpoints as needed
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    return from(this.handle(req, next));
+  }
 
-    let clonedRequest = request;
-    // Check if the request's URL contains one of the auth endpoints
-    if (this.requiresAuthorization(request.url)) {
+  async handle(req: HttpRequest<any>, next: HttpHandler) {
+    if (this.requiresAuthorization(req.url)) {
+      const { value } = await Preferences.get({ key: 'token' });
 
-      // Obtener
-      // Condicional para ver si se obtuvo bien
-      
-      // Replace with token from storage
-     // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDk1YjYxMGZiY2YyODU5NTRkMWM1ZSIsInVzZXJuYW1lIjoicHdlcGVlZSIsImlhdCI6MTY5OTQwMDc5N30.HbcTQnL-t4s20V3F4wt33FSE6gNXskYiDl2qlwDRz1k'; 
-     const token = this.localstorage.get('token'); 
-     clonedRequest = request.clone({
+      req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${value}`,
         },
       });
     }
 
-    return next.handle(clonedRequest);
+    return await lastValueFrom(next.handle(req));
   }
 
   private requiresAuthorization(url: string): boolean {

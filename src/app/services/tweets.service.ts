@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import {
   ITweetResponse,
   ITweetArrayResponse,
@@ -62,11 +62,13 @@ export class TweetsService {
     );
   }
 
-  getRecentTweets(queryParams?: any): Observable<ITweetArrayResponse> {
+  async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
-      params,
-    });
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
+        params,
+      })
+    );
   }
 
   getFollowingTweets(queryParams?: any): Observable<ITweetArrayResponse> {

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { TweetsService } from 'src/app/services/tweets.service';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-tab1',
@@ -9,9 +10,12 @@ import { TweetsService } from 'src/app/services/tweets.service';
 export class Tab1Page implements OnInit {
   tweetsService = inject(TweetsService);
 
-  ngOnInit(): void {
-    this.tweetsService.getRecentTweets().subscribe((response) => {
-      console.log(response.data);
-    });
+  async ngOnInit() {
+    await this.getRecentTweets();
+  }
+
+  async getRecentTweets() {
+    const res = await this.tweetsService.getRecentTweets();
+    console.log(res);
   }
 }

@@ -4,38 +4,38 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-<form (submit)="login()"  #loginForm="ngForm">
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
+    <ion-input
+      fill="solid"
+      label="Username"
+      labelPlacement="floating"
+      type="text"
+      formControlName="identifier"
+    ></ion-input>
+    <ion-note
+      *ngIf="loginForm.get('identifier')?.invalid && loginForm.get('identifier')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('identifier') }}
+    </ion-note>
 
-
-  <ion-input
-    fill="solid"
-    label="Username"
-    labelPlacement="floating"
-    type="text"
-    [(ngModel)]="username"
-    ngModel
-    required
-    maxlength="15"
-    name="username"
-    errorText="Invalid username"
-  ></ion-input>
-  <ion-input
-    fill="solid"
-    label="Password"
-    labelPlacement="floating"
-    type="password"
-    [(ngModel)]="password"
-    ngModel
-    required
-    minlength="6"
-    maxlength="15"
-    [counter]="true"
-    name="password"
-    errorText="Invalid password"
-  ></ion-input>
-
-<ion-button type="submit" [disabled]="loginForm.invalid">Login</ion-button>
-</form>
+    <ion-input
+      fill="solid"
+      label="Password"
+      labelPlacement="floating"
+      type="password"
+      formControlName="password"
+      maxlength="15"
+      [counter]="true"
+    ></ion-input>
+    <ion-note
+      *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      color="danger"
+    >
+      {{ getErrorMessage('password') }}
+    </ion-note>
+    <ion-button type="submit" [disabled]="loginForm.invalid">Login</ion-button>
+  </form>
 </ion-content>
 
 <p>Don't have an account? <a [routerLink]="['/register']">Register</a></p>
