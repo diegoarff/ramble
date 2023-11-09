@@ -1,0 +1,32 @@
+<div class="tweet-container">
+  <div class="tweet-header">
+    <div class="tweet-header-avatar">
+      <img src="{{ tweet.user[0].avatar }}" />
+    </div>
+    <div class="tweet-header-name">
+      <p class="tweet-name">{{ tweet.user[0].name }}</p>
+      <p class="tweet-username">#{{ tweet.user[0].username }}</p>
+    </div>
+  </div>
+  <div class="tweet-content">
+    <ion-text>{{ tweet.content }}</ion-text>
+    <div class="image-container" *ngIf="tweet.image">
+      <img class="image" [src]="tweet.image" />
+    </div>
+  </div>
+  <div class="tweet-footer">
+    <div class="tweet-footer-buttons">
+      <div class="tweet-footer-icon">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+        <ion-text>{{ tweet.replyCount }}</ion-text>
+      </div>
+      <div class="tweet-footer-icon">
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-text>{{ tweet.likeCount }}</ion-text>
+      </div>
+    </div>
+    <div class="tweet-footer-date">
+      <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+    </div>
+  </div>
+</div>

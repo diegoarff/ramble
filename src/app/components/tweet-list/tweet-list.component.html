@@ -1,0 +1,17 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="tweets.length > 0">
+    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+  </ion-list>
+  <div *ngIf="tweets.length === 0 && !isLoading">
+    <ion-text color="medium" class="ion-text-center">
+      No rambles available
+    </ion-text>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="loadMoreTweets($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

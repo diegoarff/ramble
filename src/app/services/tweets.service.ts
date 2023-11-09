@@ -118,7 +118,7 @@ export class TweetsService {
     }));
   }
 
-  private constructQueryParams(queryParams: any): HttpParams {
+  constructQueryParams(queryParams: any): HttpParams {
     let params = new HttpParams();
 
     if (queryParams && typeof queryParams === 'object') {
@@ -130,5 +130,26 @@ export class TweetsService {
     }
 
     return params;
+  }
+
+  getMethod(method: string) {
+    switch (method) {
+      case 'getRecentTweets':
+        return this.getRecentTweets;
+      case 'getFollowingTweets':
+        return this.getFollowingTweets;
+      case 'getTweetsFromUser':
+        return this.getTweetsFromUser;
+      case 'getReplyTweetsFromUser':
+        return this.getReplyTweetsFromUser;
+      case 'getLikedTweetsFromUser':
+        return this.getLikedTweetsFromUser;
+      case 'getRepliesFromTweet':
+        return this.getRepliesFromTweet;
+      case 'searchTweets':
+        return this.searchTweets;
+      default:
+        return this.getRecentTweets;
+    }
   }
 }

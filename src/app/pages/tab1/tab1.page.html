@@ -11,10 +11,10 @@
   </ion-segment>
 
   <ng-container *ngIf="segment === 'recent'">
-    <app-tweet-template *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet-template>
+    <app-tweet-list method="getRecentTweets"></app-tweet-list>
   </ng-container>
 
   <ng-container *ngIf="segment === 'following'">
-    <h1>Following</h1>
+    <app-tweet-list method="getFollowingTweets"></app-tweet-list>
   </ng-container>
 </ion-content>
