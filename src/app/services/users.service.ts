@@ -45,21 +45,21 @@ export class UsersService {
     return lastValueFrom(this.http.post<IResponse>(`${this.baseUrl}/${userId}/block`, {}));
   }
 
-  async getFollowersFromUser(userId: string): Promise<IUserListResponse[]> {
-    return lastValueFrom(this.http.get<IUserListResponse[]>(
+  async getFollowersFromUser(userId: string): Promise<IUserListResponse> {
+    return lastValueFrom(this.http.get<IUserListResponse>(
       `${this.baseUrl}/${userId}/followers`
     ));
   }
 
-  async getFollowingFromUser(userId: string): Promise<IUserListResponse[]> {
-    return lastValueFrom(this.http.get<IUserListResponse[]>(
+  async getFollowingFromUser(userId: string): Promise<IUserListResponse> {
+    return lastValueFrom(this.http.get<IUserListResponse>(
       `${this.baseUrl}/${userId}/following`
     ));
   }
 
-  async searchUsers(queryParams?: any): Promise<IUserSearchResponse[]> {
+  async searchUsers(queryParams?: any): Promise<IUserSearchResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<IUserSearchResponse[]>(`${this.baseUrl}/search`, {
+    return lastValueFrom(this.http.get<IUserSearchResponse>(`${this.baseUrl}/search`, {
       params,
     }));
   }

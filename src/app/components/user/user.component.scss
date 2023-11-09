@@ -1,0 +1,59 @@
+// <div class="user-container">
+//   <div class="user-header">
+//     <div class="user-header-avatar">
+//       <img src="{{ user.avatar }}" />
+//     </div>
+//     <div class="user-header-name">
+//       <p class="user-name">{{ user.name }}</p>
+//       <p class="user-username">#{{ user.username }}</p>
+//     </div>
+//   </div>
+//   <div class="user-content">
+//     <ion-text>{{ user.bio }}</ion-text>
+//   </div>
+// </div>
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 0 10px;
+  border-bottom: 1px solid #333333;
+  margin-bottom: 10px;
+
+  .user-header {
+    display: flex;
+    align-items: center;
+
+    .user-header-avatar {
+      margin-right: 10px;
+
+      img {
+        width: 50px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+      }
+    }
+    .user-header-name {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      .user-name {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .user-username {
+        font-size: 14px;
+      }
+    }
+  }
+  .user-content {
+    margin-top: 10px;
+
+    ion-text {
+      font-size: 16px;
+    }
+  }
+}

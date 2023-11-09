@@ -1,17 +1,72 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-searchbar
+      [debounce]="1500"
+      (ionInput)="handleInput($event)"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ng-container>
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="rambles"> Rambles </ion-segment-button>
+      <ion-segment-button value="users"> Users </ion-segment-button>
+    </ion-segment>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <div *ngIf="segment === 'rambles'">
+      <div class="chips">
+        <ion-chip
+          [color]="filter === 'latest' ? 'primary' : 'medium'"
+          [outline]="filter !== 'latest'"
+          (click)="setFilter('latest')"
+          >Latest</ion-chip
+        >
+        <ion-chip
+          [color]="filter === 'oldest' ? 'primary' : 'medium'"
+          [outline]="filter !== 'oldest'"
+          (click)="setFilter('oldest')"
+          >Oldest</ion-chip
+        >
+        <ion-chip
+          [color]="filter === 'popular' ? 'primary' : 'medium'"
+          [outline]="filter !== 'popular'"
+          (click)="setFilter('popular')"
+          >Popular</ion-chip
+        >
+        <ion-chip
+        [color]="filter === 'media' ? 'primary' : 'medium'"
+        [outline]="filter !== 'media'"
+        (click)="setFilter('media')"
+        >Media</ion-chip
+      >
+      </div>
+
+      <ion-text
+        *ngIf="tweets.length === 0"
+        color="medium"
+        class="ion-text-center"
+      >
+        No rambles
+      </ion-text>
+      <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+    </div>
+
+    <div *ngIf="segment === 'users'">
+      <ion-text
+        *ngIf="users.length === 0"
+        color="medium"
+        class="ion-text-center"
+      >
+        No users
+      </ion-text>
+      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    </div>
+  </ng-container>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

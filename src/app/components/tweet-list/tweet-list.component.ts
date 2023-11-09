@@ -22,13 +22,14 @@ type ITweetMethods =
   styleUrls: ['./tweet-list.component.scss'],
 })
 export class TweetListComponent implements OnInit {
+  tweetsService = inject(TweetsService);
+
   @Input() method: ITweetMethods = '';
   @Input() userId: string = '';
 
   tweets: ITweet[] = [];
   isLoading: boolean = false;
-  tweetsService = inject(TweetsService);
-  getTweetsFunction: any;
+  getTweetsFunction: Function = () => [];
 
   ngOnInit() {
     this.getTweetsFunction = this.tweetsService

@@ -4,8 +4,10 @@
       <img src="{{ tweet.user[0].avatar }}" />
     </div>
     <div class="tweet-header-name">
-      <p class="tweet-name">{{ tweet.user[0].name }}</p>
-      <p class="tweet-username">#{{ tweet.user[0].username }}</p>
+      <ion-text class="tweet-name">{{ tweet.user[0].name }}</ion-text>
+      <ion-text color="primary" class="tweet-username"
+        >#{{ tweet.user[0].username }}</ion-text
+      >
     </div>
   </div>
   <div class="tweet-content">

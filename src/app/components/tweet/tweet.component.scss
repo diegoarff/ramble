@@ -23,16 +23,16 @@
 
     .tweet-header-name {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 6px;
+
       .tweet-name {
         font-size: 16px;
         font-weight: bold;
-        margin-right: 5px;
       }
 
       .tweet-username {
         font-size: 14px;
-        color: #666;
       }
     }
   }

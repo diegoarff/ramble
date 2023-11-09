@@ -62,7 +62,17 @@ export class TweetsService {
     ));
   }
 
-  async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
+  // async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
+  //   const params = this.constructQueryParams(queryParams);
+  //   return lastValueFrom(
+  //     this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
+  //       params,
+  //     })
+  //   );
+  // }
+
+  // Make the getRecentTweets an arrow function
+  getRecentTweets = async (queryParams?: any): Promise<ITweetArrayResponse> => {
     const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
       this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
@@ -118,7 +128,7 @@ export class TweetsService {
     }));
   }
 
-  constructQueryParams(queryParams: any): HttpParams {
+  constructQueryParams = (queryParams: any): HttpParams => {
     let params = new HttpParams();
 
     if (queryParams && typeof queryParams === 'object') {
