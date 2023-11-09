@@ -25,8 +25,9 @@ export class RegisterPage implements OnInit {
     confirm_password: '',
     biography: '',
   };
+  user = new FormData();
   constructor(
-    private user: FormData,
+   
     private authService: AuthService,
   ) {}
 
@@ -36,13 +37,17 @@ export class RegisterPage implements OnInit {
     return this.data.password === this.data.confirm_password;
   }
   register() {
+    this.user.delete('name')
+    this.user.delete('username')
+    this.user.delete('email')
+    this.user.delete('password')
+    this.user.delete('bio')
     this.user.append('name', this.data.name); 
     this.user.append('username', this.data.username); 
     this.user.append('email', this.data.email);
     this.user.append('password', this.data.password);
-    this.user.append('confirm_password', this.data.confirm_password);
-    this.user.append('biography', this.data.biography);
-
+    this.user.append('bio', this.data.biography);
+console.log(this.user.getAll('name'));
     this.authService.signup(this.user).subscribe((res) => {
     console.log(res);
   })

@@ -12,28 +12,27 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 export class LoginPage implements OnInit {
   private router = inject(Router);
   private localstorage = inject(LocalstorageService);
-  
+
    username: string = "";
    password: string = "";
   constructor(
-    private data: FormData,
     private authService: AuthService,
   ) {}
-
+  data = new FormData();
   ngOnInit() {}
   
   login() {
-    this.data.append('username', this.username);
-    this.data.append('password', this.password);
-    this.authService.signin(this.data).subscribe((res) => {
-      console.log(res);
-      if (res.status == "success") {
-        if (res.message == "User logged in"){
-          this.localstorage.set('token', res.data.token);
-          this.router.navigate(['/tabs']);
-        }
-      }
-    });
+    // this.data.append('username', this.username);
+    // this.data.append('password', this.password);
+    // this.authService.signin(this.data).subscribe((res) => {
+    //   console.log(res);
+    //   if (res.status == "success") {
+    //     if (res.message == "User logged in"){
+    //       this.localstorage.set('token', res.data.token);
+          this.router.navigate(['/tabs'], {state: {data: "hello", data2: "world"}});
+    //     }
+    //   }
+    // });
     
     //this.router.navigate(['/tabs']);
   }

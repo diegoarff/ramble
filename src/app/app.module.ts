@@ -15,6 +15,7 @@ import { SharedServicesModule } from './services/shared-services.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { SharedComponentsModule } from './components/shared-components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
     SharedServicesModule,
+    SharedComponentsModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
   ],

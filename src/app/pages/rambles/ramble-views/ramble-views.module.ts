@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { RambleViewsPageRoutingModule } from './ramble-views-routing.module';
 
 import { RambleViewsPage } from './ramble-views.page';
+import { TweetTemplateComponent } from 'src/app/components/tweet-template/tweet-template.component';
+import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RambleViewsPageRoutingModule
+    RambleViewsPageRoutingModule,
+    SharedComponentsModule
   ],
   declarations: [RambleViewsPage]
 })
