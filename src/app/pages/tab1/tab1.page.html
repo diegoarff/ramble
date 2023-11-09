@@ -1,17 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-title> Home </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="recent"> Recent </ion-segment-button>
+    <ion-segment-button value="following"> Following </ion-segment-button>
+  </ion-segment>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ng-container *ngIf="segment === 'recent'">
+    <app-tweet-template *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet-template>
+  </ng-container>
+
+  <ng-container *ngIf="segment === 'following'">
+    <h1>Following</h1>
+  </ng-container>
 </ion-content>
