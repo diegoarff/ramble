@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { loginGuard } from './guards/login.guard';
+import { loginGuard, loginGuard2 } from './guards/login.guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
+    
   },
   {
     path: 'register',
@@ -14,12 +15,14 @@ const routes: Routes = [
       import('./pages/register/register.module').then(
         (m) => m.RegisterPageModule
       ),
+      canActivate: [loginGuard2]
       
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
+      canActivate: [loginGuard2]
   },
   {
     path: 'tabs',

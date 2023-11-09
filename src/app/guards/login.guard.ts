@@ -20,3 +20,17 @@ if (value) {
 
 
 }
+
+export const loginGuard2 = async() => {
+const router = inject(Router);
+const { value } = await Preferences.get({ key: 'token' });
+if (value) {
+    const decoded = jwtDecode(value);
+    if (decoded) {
+        router.navigate(['tabs']);
+        return false;
+    }
+}
+return true;
+
+}
