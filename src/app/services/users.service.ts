@@ -9,6 +9,7 @@ import {
   IResponse,
 } from '../interfaces';
 import { lastValueFrom } from 'rxjs';
+import { IUserResponse } from '../interfaces/Users';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +34,8 @@ export class UsersService {
     return lastValueFrom(this.http.delete<IResponse>(`${this.baseUrl}/me`));
   }
 
-  async getUser(userId: string): Promise<IUserProfile> {
-    return lastValueFrom(this.http.get<IUserProfile>(`${this.baseUrl}/${userId}`));
+  async getUser(userId: string): Promise<IUserResponse> {
+    return lastValueFrom(this.http.get<IUserResponse>(`${this.baseUrl}/${userId}`));
   }
 
   async followUser(userId: string): Promise<IResponse> {

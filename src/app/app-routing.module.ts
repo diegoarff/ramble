@@ -28,6 +28,17 @@ const routes: Routes = [
       import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [loginGuard],
   },
+  {
+    path: 'view-tweet/:id',
+    loadChildren: () => import('./pages/view-tweet/view-tweet.module').then( m => m.ViewTweetPageModule)
+  },
+  {
+    path: 'view-user/:id',
+    loadChildren: () => import('./pages/view-user/view-user.module').then( m => m.ViewUserPageModule)
+  },
+
+
+
 ];
 @NgModule({
   imports: [

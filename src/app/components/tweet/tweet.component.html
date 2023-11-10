@@ -1,6 +1,6 @@
 <div class="tweet-container">
-  <div class="tweet-header">
-    <div class="tweet-header-avatar">
+  <div class="tweet-header" (click)="redirectToUser()">
+    <div class="tweet-header-avatar" >
       <img src="{{ tweet.user[0].avatar }}" />
     </div>
     <div class="tweet-header-name">
@@ -10,7 +10,7 @@
       >
     </div>
   </div>
-  <div class="tweet-content">
+  <div class="tweet-content" (click)="redirectToTweet()">
     <ion-text>{{ tweet.content }}</ion-text>
     <div class="image-container" *ngIf="tweet.image">
       <img class="image" [src]="tweet.image" />

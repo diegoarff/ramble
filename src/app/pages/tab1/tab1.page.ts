@@ -77,4 +77,7 @@ export class Tab1Page implements OnInit {
 
     event.target.complete();
   }
+
+  
+ 
 }
