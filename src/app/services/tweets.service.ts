@@ -16,39 +16,48 @@ export class TweetsService {
   baseUrl = 'http://localhost:3000/tweets';
 
   async getTweet(tweetId: string): Promise<ITweetResponse> {
-    return lastValueFrom(this.http.get<ITweetResponse>(`${this.baseUrl}/${tweetId}`));
+    return lastValueFrom(
+      this.http.get<ITweetResponse>(`${this.baseUrl}/${tweetId}`)
+    );
   }
 
   async createTweet(tweet: object): Promise<ITweetBasicResponse> {
-    return lastValueFrom(this.http.post<ITweetBasicResponse>(`${this.baseUrl}`, tweet));
+    return lastValueFrom(
+      this.http.post<ITweetBasicResponse>(`${this.baseUrl}`, tweet)
+    );
   }
 
   async updateTweet(
     tweetId: string,
     tweet: FormData
   ): Promise<ITweetBasicResponse> {
-    return lastValueFrom(this.http.put<ITweetBasicResponse>(
-      `${this.baseUrl}/${tweetId}`,
-      tweet
-    ));
+    return lastValueFrom(
+      this.http.put<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`, tweet)
+    );
   }
 
   async deleteTweet(tweetId: string): Promise<ITweetBasicResponse> {
-    return lastValueFrom(this.http.delete<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`));
+    return lastValueFrom(
+      this.http.delete<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`)
+    );
   }
 
   async replyToTweet(
     tweetId: string,
     tweet: object
   ): Promise<ITweetBasicResponse> {
-    return lastValueFrom(this.http.post<ITweetBasicResponse>(
-      `${this.baseUrl}/${tweetId}/reply`,
-      tweet
-    ));
+    return lastValueFrom(
+      this.http.post<ITweetBasicResponse>(
+        `${this.baseUrl}/${tweetId}/reply`,
+        tweet
+      )
+    );
   }
 
   async likeTweet(tweetId: string): Promise<IResponse> {
-    return lastValueFrom(this.http.post<IResponse>(`${this.baseUrl}/${tweetId}/like`, {}));
+    return lastValueFrom(
+      this.http.post<IResponse>(`${this.baseUrl}/${tweetId}/like`, {})
+    );
   }
 
   async getRepliesFromTweet(
@@ -56,23 +65,14 @@ export class TweetsService {
     queryParams?: any
   ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<ITweetArrayResponse>(
-      `${this.baseUrl}/${tweetId}/replies`,
-      { params }
-    ));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(`${this.baseUrl}/${tweetId}/replies`, {
+        params,
+      })
+    );
   }
 
-  // async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
-  //   const params = this.constructQueryParams(queryParams);
-  //   return lastValueFrom(
-  //     this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
-  //       params,
-  //     })
-  //   );
-  // }
-
-  // Make the getRecentTweets an arrow function
-  getRecentTweets = async (queryParams?: any): Promise<ITweetArrayResponse> => {
+  async getRecentTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
       this.http.get<ITweetArrayResponse>(`${this.baseUrl}/recent`, {
@@ -83,9 +83,11 @@ export class TweetsService {
 
   async getFollowingTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<ITweetArrayResponse>(`${this.baseUrl}/following`, {
-      params,
-    }));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(`${this.baseUrl}/following`, {
+        params,
+      })
+    );
   }
 
   async getTweetsFromUser(
@@ -93,10 +95,11 @@ export class TweetsService {
     queryParams?: any
   ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom( this.http.get<ITweetArrayResponse>(
-      `${this.baseUrl}/user/${userId}`,
-      { params }
-    ));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(`${this.baseUrl}/user/${userId}`, {
+        params,
+      })
+    );
   }
 
   async getReplyTweetsFromUser(
@@ -104,10 +107,12 @@ export class TweetsService {
     queryParams?: any
   ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<ITweetArrayResponse>(
-      `${this.baseUrl}/user/${userId}/replies`,
-      { params }
-    ));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(
+        `${this.baseUrl}/user/${userId}/replies`,
+        { params }
+      )
+    );
   }
 
   async getLikedTweetsFromUser(
@@ -115,17 +120,21 @@ export class TweetsService {
     queryParams?: any
   ): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<ITweetArrayResponse>(
-      `${this.baseUrl}/user/${userId}/likes`,
-      { params }
-    ));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(
+        `${this.baseUrl}/user/${userId}/liked`,
+        { params }
+      )
+    );
   }
 
   async searchTweets(queryParams?: any): Promise<ITweetArrayResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<ITweetArrayResponse>(`${this.baseUrl}/search`, {
-      params,
-    }));
+    return lastValueFrom(
+      this.http.get<ITweetArrayResponse>(`${this.baseUrl}/search`, {
+        params,
+      })
+    );
   }
 
   constructQueryParams = (queryParams: any): HttpParams => {
@@ -140,7 +149,7 @@ export class TweetsService {
     }
 
     return params;
-  }
+  };
 
   getMethod(method: string) {
     switch (method) {

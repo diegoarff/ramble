@@ -1,4 +1,4 @@
-import { Component, OnInit, inject} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -8,45 +8,45 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./view-user.page.scss'],
 })
 export class ViewUserPage implements OnInit {
-private activedRoute = inject(ActivatedRoute)
-private userService = inject(UsersService)
-  constructor() { }
-  user_id = this.activedRoute.snapshot.paramMap.get('id');
+  private activedRoute = inject(ActivatedRoute);
+  private userService = inject(UsersService);
+  constructor() {}
+  userId = this.activedRoute.snapshot.paramMap.get('id');
   user: any;
   ngOnInit() {
-  console.log(this.user_id)
-  this.loadUser()
-}
-
-async loadUser() {
-  const res = await this.userService.getUser(this.user_id!);
-  this.user = res.data;
-  console.log(this.user);
-}
-
-async blockUser() {
-  const res = await this.userService.blockUser(this.user_id!);
-  console.log(res);
-  if(res.status === 'success'){
-    if (res.message == 'User blocked') {
-      this.user.blocked = true;
-    } else if (res.message == 'User unblocked') {
-      this.user.blocked = false;
+    console.log(this.userId);
+    this.loadUser();
   }
-}
-}
 
-async followUser() {
-  const res = await this.userService.followUser(this.user_id!);
-  console.log(res);
-  if(res.status === 'success'){
-    if (res.message == 'User followed') {
-      this.user.following = true;
-      this.user.followersCount ++; 
-    } else if (res.message == 'User unfollowed') {
-      this.user.following = false;
-      this.user.followersCount --;
+  async loadUser() {
+    const res = await this.userService.getUser(this.userId!);
+    this.user = res.data;
+    console.log(this.user);
   }
-}
-}
+
+  async blockUser() {
+    const res = await this.userService.blockUser(this.userId!);
+    console.log(res);
+    if (res.status === 'success') {
+      if (res.message == 'User blocked') {
+        this.user.blocked = true;
+      } else if (res.message == 'User unblocked') {
+        this.user.blocked = false;
+      }
+    }
+  }
+
+  async followUser() {
+    const res = await this.userService.followUser(this.userId!);
+    console.log(res);
+    if (res.status === 'success') {
+      if (res.message == 'User followed') {
+        this.user.following = true;
+        this.user.followersCount++;
+      } else if (res.message == 'User unfollowed') {
+        this.user.following = false;
+        this.user.followersCount--;
+      }
+    }
+  }
 }

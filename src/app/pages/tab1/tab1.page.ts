@@ -44,7 +44,6 @@ export class Tab1Page implements OnInit {
   async loadTweets() {
     if (this.segment === 'recent') {
       const res = await this.tweetsService.getRecentTweets();
-      console.log(res);
       this.tweets = res.data;
     }
 
