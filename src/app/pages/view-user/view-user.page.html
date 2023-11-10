@@ -4,7 +4,7 @@
       <img class="avatar" src="{{ user.avatar }}" />
     </div>
     <div *ngIf="user.hasMeBlocked == false"> 
-      <ion-button *ngIf="user.blocked== false">{{user.following? "Followed":"Follow"}}</ion-button>
+      <ion-button *ngIf="user.blocked== false" (click)="followUser()" >{{user.following? "Followed":"Follow"}}</ion-button>
       <ion-button color="danger">{{user.blocked? "Unblock":"Block"}}</ion-button>
     </div>
   </div>

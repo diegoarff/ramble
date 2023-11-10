@@ -24,4 +24,19 @@ async loadUser() {
   console.log(this.user);
 }
 
+async followUser() {
+  const res = await this.userService.followUser(this.user_id!);
+  console.log(res);
+  if(res.status === 'success'){
+    if (res.message == 'User followed') {
+      this.user.following = true;
+      this.user.followersCount ++; 
+    } else if (res.message == 'User unfollowed') {
+      this.user.following = false;
+      this.user.followersCount --;
+  }
+ 
+}
+
+}
 }
