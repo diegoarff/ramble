@@ -5,16 +5,36 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment [(ngModel)]="segment">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="recent"> Recent </ion-segment-button>
     <ion-segment-button value="following"> Following </ion-segment-button>
   </ion-segment>
 
   <ng-container *ngIf="segment === 'recent'">
-    <app-tweet-list method="getRecentTweets" ></app-tweet-list>
+    <ion-text
+      *ngIf="tweets.length === 0"
+      color="medium"
+      class="ion-text-center"
+    >
+      No rambles
+    </ion-text>
+    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
   </ng-container>
 
   <ng-container *ngIf="segment === 'following'">
-    <app-tweet-list method="getFollowingTweets"></app-tweet-list>
+    <ion-text
+      *ngIf="tweets.length === 0"
+      color="medium"
+      class="ion-text-center"
+    >
+      No rambles
+    </ion-text>
+    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
   </ng-container>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

@@ -8,15 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <ng-container>
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="rambles"> Rambles </ion-segment-button>
       <ion-segment-button value="users"> Users </ion-segment-button>
     </ion-segment>
 
+    <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
     <div *ngIf="segment === 'rambles'">
       <div class="chips">
         <ion-chip
@@ -38,11 +39,11 @@
           >Popular</ion-chip
         >
         <ion-chip
-        [color]="filter === 'media' ? 'primary' : 'medium'"
-        [outline]="filter !== 'media'"
-        (click)="setFilter('media')"
-        >Media</ion-chip
-      >
+          [color]="filter === 'media' ? 'primary' : 'medium'"
+          [outline]="filter !== 'media'"
+          (click)="setFilter('media')"
+          >Media</ion-chip
+        >
       </div>
 
       <ion-text
