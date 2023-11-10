@@ -22,8 +22,8 @@
         <ion-icon name="chatbubble-outline"></ion-icon>
         <ion-text>{{ tweet.replyCount }}</ion-text>
       </div>
-      <div class="tweet-footer-icon">
-        <ion-icon name="heart-outline"></ion-icon>
+      <div class="tweet-footer-icon" (click)="likeTweet()">
+        <ion-icon name="heart-outline" [color]="tweet.liked? 'danger': 'medium'"></ion-icon>
         <ion-text>{{ tweet.likeCount }}</ion-text>
       </div>
     </div>
