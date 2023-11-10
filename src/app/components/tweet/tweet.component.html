@@ -1,12 +1,12 @@
 <div class="tweet-container">
   <div class="tweet-header" (click)="redirectToUser()">
     <div class="tweet-header-avatar">
-      <img src="{{ tweet.user[0].avatar }}" />
+      <img src="{{ tweet.user.avatar }}" />
     </div>
     <div class="tweet-header-name">
-      <ion-text class="tweet-name">{{ tweet.user[0].name }}</ion-text>
+      <ion-text class="tweet-name">{{ tweet.user.name }}</ion-text>
       <ion-text color="primary" class="tweet-username"
-        >@{{ tweet.user[0].username }}</ion-text
+        >@{{ tweet.user.username }}</ion-text
       >
     </div>
   </div>

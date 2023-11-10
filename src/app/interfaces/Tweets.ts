@@ -28,14 +28,14 @@ export interface ITweet {
   isReplyTo: string | null;
   isEdited: boolean;
   createdAt: string;
-  user: [
+  user: 
     {
       _id: string;
       username: string;
       name: string;
       avatar: string;
     }
-  ];
+  ;
   liked: boolean;
   likeCount: number;
   replyCount: number;

@@ -23,7 +23,7 @@ export class TweetComponent implements OnInit {
   }
 
   redirectToUser() {
-    this.router.navigate(['/view-user', this.tweet.user[0]._id]);
+    this.router.navigate(['/view-user', this.tweet.user._id]);
   }
   
   async likeTweet() {
