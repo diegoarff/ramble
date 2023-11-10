@@ -1,15 +1,14 @@
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage {
-  private router = inject(Router);
-  constructor() {}
-ngOnInit() {
+  selectedTab = 'tab1';
 
-}
+  tabSelected(tab: string) {
+    this.selectedTab = tab;
+  }
 }
