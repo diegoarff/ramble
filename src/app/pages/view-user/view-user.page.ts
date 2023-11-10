@@ -24,6 +24,18 @@ async loadUser() {
   console.log(this.user);
 }
 
+async blockUser() {
+  const res = await this.userService.blockUser(this.user_id!);
+  console.log(res);
+  if(res.status === 'success'){
+    if (res.message == 'User blocked') {
+      this.user.blocked = true;
+    } else if (res.message == 'User unblocked') {
+      this.user.blocked = false;
+  }
+}
+}
+
 async followUser() {
   const res = await this.userService.followUser(this.user_id!);
   console.log(res);
@@ -35,8 +47,6 @@ async followUser() {
       this.user.following = false;
       this.user.followersCount --;
   }
- 
 }
-
 }
 }

@@ -5,7 +5,7 @@
     </div>
     <div *ngIf="user.hasMeBlocked == false"> 
       <ion-button *ngIf="user.blocked== false" (click)="followUser()" >{{user.following? "Followed":"Follow"}}</ion-button>
-      <ion-button color="danger">{{user.blocked? "Unblock":"Block"}}</ion-button>
+      <ion-button color="danger" (click)="blockUser()">{{user.blocked? "Unblock":"Block"}}</ion-button>
     </div>
   </div>
   <div class="user-content">
