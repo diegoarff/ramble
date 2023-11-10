@@ -19,7 +19,7 @@ export class TweetsService {
     return lastValueFrom(this.http.get<ITweetResponse>(`${this.baseUrl}/${tweetId}`));
   }
 
-  async createTweet(tweet: FormData): Promise<ITweetBasicResponse> {
+  async createTweet(tweet: object): Promise<ITweetBasicResponse> {
     return lastValueFrom(this.http.post<ITweetBasicResponse>(`${this.baseUrl}`, tweet));
   }
 
@@ -39,7 +39,7 @@ export class TweetsService {
 
   async replyToTweet(
     tweetId: string,
-    tweet: FormData
+    tweet: object
   ): Promise<ITweetBasicResponse> {
     return lastValueFrom(this.http.post<ITweetBasicResponse>(
       `${this.baseUrl}/${tweetId}/reply`,

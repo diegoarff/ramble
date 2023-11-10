@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ModalCreateTweetComponent } from 'src/app/components/modal-create-tweet/modal-create-tweet.component';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
 
@@ -10,7 +11,7 @@ import { TweetsService } from 'src/app/services/tweets.service';
 })
 export class Tab1Page implements OnInit {
   tweetsService = inject(TweetsService);
-  router = inject(Router);
+  modalCtrl = inject(ModalController);
   segment: string = 'recent';
   tweets: ITweet[] = [];
 
@@ -18,12 +19,27 @@ export class Tab1Page implements OnInit {
     this.loadTweets();
   }
 
-  // when segment changes, load tweets
   async segmentChanged(event: any) {
     this.segment = event.target.value;
     await this.loadTweets();
   }
 
+  async createTweet() {
+    const modal = await this.modalCtrl.create({
+      component: ModalCreateTweetComponent,
+      componentProps: {
+        tweetId: '',
+      },
+    });
+
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      this.loadTweets();
+    }
+  }
 
   async loadTweets() {
     if (this.segment === 'recent') {

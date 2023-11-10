@@ -85,12 +85,7 @@ export class RegisterPage implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/),
         ],
       ],
-      bio: [
-        '',
-        [
-          Validators.maxLength(160),
-        ],
-      ],
+      bio: ['', [Validators.maxLength(160)]],
     });
   }
 
@@ -98,15 +93,12 @@ export class RegisterPage implements OnInit {
   //   return this.registerForm.get('password') === this.registerForm.get('confirm_password');
   // }
 
-  async  register() {
-    if (this.registerForm.invalid) {
-      return;
-    }
+  async register() {
+    if (this.registerForm.invalid) return;
 
     console.log(this.registerForm.value);
 
-
-    const res = await this.authService.signup(this.registerForm.value)
+    const res = await this.authService.signup(this.registerForm.value);
     if (res.status == 'success') {
       this.router.navigate(['/login']);
     }
