@@ -10,32 +10,34 @@
       >
     </div>
   </div>
-  <div class="tweet-content" (click)="redirectToTweet()">
-    <ion-text>{{ tweet.content }}</ion-text>
-    <div class="image-container" *ngIf="tweet.image">
-      <img class="image" [src]="tweet.image" />
-    </div>
-  </div>
-  <div class="tweet-footer">
-    <div class="tweet-footer-buttons">
-      <div class="tweet-footer-icon">
-        <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
-        <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
-      </div>
-      <div class="tweet-footer-icon" (click)="likeTweet()">
-        <ion-icon
-          *ngIf="!tweet.liked"
-          name="heart-outline"
-          color="medium"
-        ></ion-icon>
-        <ion-icon *ngIf="tweet.liked" name="heart" color="danger"></ion-icon>
-        <ion-text [color]="tweet.liked ? 'danger' : 'medium'">{{
-          tweet.likeCount
-        }}</ion-text>
+  <div (click)="redirectToTweet()">
+    <div class="tweet-content">
+      <ion-text>{{ tweet.content }}</ion-text>
+      <div class="image-container" *ngIf="tweet.image">
+        <img class="image" [src]="tweet.image" />
       </div>
     </div>
-    <div class="tweet-footer-date">
-      <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+    <div class="tweet-footer">
+      <div class="tweet-footer-buttons">
+        <div class="tweet-footer-icon">
+          <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
+          <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
+        </div>
+        <div class="tweet-footer-icon" (click)="likeTweet()">
+          <ion-icon
+            *ngIf="!tweet.liked"
+            name="heart-outline"
+            color="medium"
+          ></ion-icon>
+          <ion-icon *ngIf="tweet.liked" name="heart" color="danger"></ion-icon>
+          <ion-text [color]="tweet.liked ? 'danger' : 'medium'">{{
+            tweet.likeCount
+          }}</ion-text>
+        </div>
+      </div>
+      <div class="tweet-footer-date">
+        <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+      </div>
     </div>
   </div>
 </div>

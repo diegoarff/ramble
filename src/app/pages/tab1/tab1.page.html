@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content>
-
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="createTweet()">
       <ion-icon name="add"></ion-icon>
@@ -15,32 +14,20 @@
   <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
   <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="recent"> Recent </ion-segment-button>
     <ion-segment-button value="following"> Following </ion-segment-button>
   </ion-segment>
 
-  <ng-container *ngIf="segment === 'recent'">
-    <ion-text
-      *ngIf="tweets.length === 0"
-      color="medium"
-      class="ion-text-center"
-    >
-      No rambles
-    </ion-text>
-    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet" ></app-tweet>
-  </ng-container>
+  <ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
+    No rambles
+  </ion-text>
 
-  <ng-container *ngIf="segment === 'following'">
-    <ion-text
-      *ngIf="tweets.length === 0"
-      color="medium"
-      class="ion-text-center"
-    >
-      No rambles
-    </ion-text>
-    <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
-  </ng-container>
+  <!-- Implement loading states -->
+
+  <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+
   <ion-infinite-scroll (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>

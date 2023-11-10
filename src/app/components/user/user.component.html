@@ -1,13 +1,4 @@
-<!-- Generate the code for a user component that will be used on various lists -->
-<!-- export interface IUserBasic {
-  _id: string;
-  username: string;
-  name: string;
-  avatar: string;
-  bio: string;
-} -->
-
-<div class="user-container">
+<div class="user-container" (click)="redirectToUser()">
   <div class="user-header">
     <div class="user-header-avatar">
       <img src="{{ user.avatar }}" />

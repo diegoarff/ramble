@@ -23,6 +23,7 @@ export class ModalCreateTweetComponent implements OnInit {
   content: any;
 
   ngOnInit() {
+    console.log(this.tweetId);
     this.createTweetForm = this.formBuilder.group({
       content: ['', [Validators.required]],
     });
@@ -43,9 +44,9 @@ export class ModalCreateTweetComponent implements OnInit {
     const tweet = { content, image };
 
     if (this.tweetId) {
-      this.tweetsService.replyToTweet(this.tweetId, tweet);
+      await this.tweetsService.replyToTweet(this.tweetId, tweet);
     } else {
-      this.tweetsService.createTweet(tweet);
+      await this.tweetsService.createTweet(tweet);
     }
 
     return this.modalCtrl.dismiss(true);

@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>User</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -47,7 +50,7 @@
         >You can't follow or see @{{user.username}}'s posts</ion-text
       >
     </div>
-  
+
     <div
       class="blocked"
       *ngIf="user.blocked === true && user.hasMeBlocked === false"
