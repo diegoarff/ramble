@@ -22,7 +22,6 @@ async loadUser() {
   const res = await this.userService.getUser(this.user_id!);
   this.user = res.data;
   console.log(this.user);
-
 }
 
 }
