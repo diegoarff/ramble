@@ -1,6 +1,6 @@
 <div class="tweet-container">
   <div class="tweet-header" (click)="redirectToUser()">
-    <div class="tweet-header-avatar" >
+    <div class="tweet-header-avatar">
       <img src="{{ tweet.user[0].avatar }}" />
     </div>
     <div class="tweet-header-name">
@@ -19,12 +19,19 @@
   <div class="tweet-footer">
     <div class="tweet-footer-buttons">
       <div class="tweet-footer-icon">
-        <ion-icon name="chatbubble-outline"></ion-icon>
-        <ion-text>{{ tweet.replyCount }}</ion-text>
+        <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
+        <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
       </div>
       <div class="tweet-footer-icon" (click)="likeTweet()">
-        <ion-icon name="heart-outline" [color]="tweet.liked? 'danger': 'medium'"></ion-icon>
-        <ion-text>{{ tweet.likeCount }}</ion-text>
+        <ion-icon
+          *ngIf="!tweet.liked"
+          name="heart-outline"
+          color="medium"
+        ></ion-icon>
+        <ion-icon *ngIf="tweet.liked" name="heart" color="danger"></ion-icon>
+        <ion-text [color]="tweet.liked ? 'danger' : 'medium'">{{
+          tweet.likeCount
+        }}</ion-text>
       </div>
     </div>
     <div class="tweet-footer-date">
