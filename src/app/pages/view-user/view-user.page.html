@@ -1,0 +1,22 @@
+<div *ngIf="user" class="user-container">
+  <div class="user-header">
+    <div>
+      <img class="avatar" src="{{ user.avatar }}" />
+    </div>
+    <div> 
+      <ion-button>{{user.following? "Followed":"Follow"}}</ion-button>
+    </div>
+  </div>
+  <div class="user-content">
+    <div class="name">
+      <ion-text> {{ user.name }} </ion-text>
+      <ion-text color="medium"> @{{ user.username }} </ion-text>
+    </div>
+    <ion-text class="bio">{{ user.bio }}</ion-text>
+    <ion-text color="medium" >Joined {{user.createdAt.slice(0,10)}}    </ion-text>
+  </div>
+  <div class="user-footer">
+    <ion-text >{{ user.followingCount }} Following</ion-text>
+    <ion-text >{{ user.followersCount }} Followers</ion-text>
+  </div>
+</div>
