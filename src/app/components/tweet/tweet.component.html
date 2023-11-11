@@ -1,4 +1,5 @@
 <div class="tweet-container">
+  <div class="header-popover">
   <div class="tweet-header" (click)="redirectToUser()">
     <div class="tweet-header-avatar">
       <img src="{{ tweet.user.avatar }}" />
@@ -9,7 +10,11 @@
         >@{{ tweet.user.username }}</ion-text
       >
     </div>
+  </div> 
+  <div *ngIf="true">
+    <ion-icon name="ellipsis-vertical" [id]="'open-'+tweet._id" size="large"></ion-icon>
   </div>
+</div>
   <div (click)="redirectToTweet()">
     <div class="tweet-content">
       <ion-text>{{ tweet.content }}</ion-text>
@@ -41,3 +46,21 @@
     </div>
   </div>
 </div>
+
+
+<ion-popover [trigger]="'open-'+tweet._id" >
+  <ng-template>
+    <ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+      <ion-label>Delete</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="pencil-outline" slot="start"></ion-icon>
+      <ion-label>Edit</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+</ng-template>
+</ion-popover>
