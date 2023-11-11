@@ -5,6 +5,12 @@
       <ion-icon name="person"></ion-icon>
     </ion-fab-button>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="recent"> Recent </ion-segment-button>
+      <ion-segment-button value="following"> Following </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -17,11 +23,6 @@
   <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
-  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="recent"> Recent </ion-segment-button>
-    <ion-segment-button value="following"> Following </ion-segment-button>
-  </ion-segment>
 
   <ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
     No rambles

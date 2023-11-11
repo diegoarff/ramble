@@ -1,18 +1,27 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
     <ion-searchbar
       [debounce]="1500"
       (ionInput)="handleInput($event)"
     ></ion-searchbar>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ng-container>
+  <ion-toolbar>
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="rambles"> Rambles </ion-segment-button>
       <ion-segment-button value="users"> Users </ion-segment-button>
     </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container>
+    <!-- <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="rambles"> Rambles </ion-segment-button>
+      <ion-segment-button value="users"> Users </ion-segment-button>
+    </ion-segment> -->
 
     <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
       <ion-refresher-content></ion-refresher-content>

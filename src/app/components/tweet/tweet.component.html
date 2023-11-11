@@ -40,7 +40,7 @@
           <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
           <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
         </div>
-        <div class="tweet-footer-icon" (click)="likeTweet()">
+        <div class="tweet-footer-icon" (click)="likeTweet($event)">
           <ion-icon
             *ngIf="!tweet.liked"
             name="heart-outline"

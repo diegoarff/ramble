@@ -16,7 +16,8 @@ import { IUserResponse, IUserWithCountsResponse } from '../interfaces/Users';
 })
 export class UsersService {
   http = inject(HttpClient);
-  baseUrl = 'https://ramble.cyclic.app/users';
+  // baseUrl = 'https://ramble.cyclic.app/users';
+  baseUrl = 'http://localhost:3000/users';
 
   async getMe(): Promise<IUserWithCountsResponse> {
     return lastValueFrom(

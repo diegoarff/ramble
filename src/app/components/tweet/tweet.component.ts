@@ -48,7 +48,8 @@ export class TweetComponent implements OnInit {
     this.router.navigate(['/view-user', this.tweet.user._id]);
   }
 
-  async likeTweet() {
+  async likeTweet(event: Event) {
+    event.stopPropagation();
     if (this.loading) return;
     this.loading = true;
     const res = await this.tweetService.likeTweet(this.tweet._id!);
