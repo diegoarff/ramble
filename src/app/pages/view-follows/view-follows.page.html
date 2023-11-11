@@ -1,0 +1,16 @@
+<ion-header >
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-text 
+    *ngIf="data.length === 0"
+    color="medium" class="ion-text-center">
+      No users
+    </ion-text>
+    <app-user *ngFor="let user of data" [user]="user"></app-user>
+  </div>
+
+</ion-content>

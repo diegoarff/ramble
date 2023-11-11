@@ -39,7 +39,12 @@ const routes: Routes = [
   {
     path: 'my-profile',
     loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
+  },
+  {
+    path: 'view-follows/:id',
+    loadChildren: () => import('./pages/view-follows/view-follows.module').then( m => m.ViewFollowsPageModule)
   }
+
 ];
 @NgModule({
   imports: [

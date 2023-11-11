@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class ViewUserPage implements OnInit {
   private activedRoute = inject(ActivatedRoute);
   private userService = inject(UsersService);
+  private router = inject(Router);
   constructor() {}
   userId = this.activedRoute.snapshot.paramMap.get('id');
   user: any;
@@ -48,5 +49,11 @@ export class ViewUserPage implements OnInit {
         this.user.followersCount--;
       }
     }
+  }
+
+  gotoFollows(filter: string) {
+    this.router.navigate(['/view-follows', this.userId], {
+      state: { filter, userId: this.userId },
+    });
   }
 }
