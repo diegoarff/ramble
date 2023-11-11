@@ -1,7 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
+import { Preferences } from '@capacitor/preferences';
+import { ModalController } from '@ionic/angular';
+import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
 
 @Component({
   selector: 'app-tweet',
@@ -9,18 +12,29 @@ import { TweetsService } from 'src/app/services/tweets.service';
   styleUrls: ['./tweet.component.scss'],
 })
 export class TweetComponent implements OnInit {
+  private modalCtrl = inject(ModalController);
   private router = inject(Router);
   private tweetService = inject(TweetsService);
   @Input() tweet: ITweet = {} as ITweet;
   loading: boolean = false;
+  checkUser: boolean = false;
 
-  ngOnInit() {}
+  @ViewChild('popover') popover: any;
+  ngOnInit() {
+    this.getUserID();
+  }
+
 
   redirectToTweet() {
     this.router.navigate(['/view-tweet', this.tweet._id], {
       state: { tweet: this.tweet },
     });
   }
+
+async getUserID(){
+  const { value } =  await Preferences.get({ key: 'userId' });
+  this.checkUser = (this.tweet.user._id == value);
+}
 
   redirectToUser() {
     this.router.navigate(['/view-user', this.tweet.user._id]);
@@ -42,4 +56,36 @@ export class TweetComponent implements OnInit {
     }
     this.loading = false;
   }
+
+  showOptions(event: any) {
+    this.popover.event = event;
+    this.popover.present();
+  }
+
+  async deleteTweet() {
+    const res = await this.tweetService.deleteTweet(this.tweet._id);
+    if (res.status === 'success') {
+      window.location.reload();
+    }
+    this.popover.dismiss();
+  }
+
+  async openEditModal(){
+    
+    const modal = await this.modalCtrl.create({
+      component: ModalEditTweetComponent,
+      componentProps: {
+        tweet: this.tweet,
+      },
+    });
+
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data) {
+      window.location.reload();
+    }
+  }
+  
 }

@@ -6,10 +6,11 @@ import { UserComponent } from './user/user.component';
 import { ModalCreateTweetComponent } from './modal-create-tweet/modal-create-tweet.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserSegmentsComponent } from './user-segments/user-segments.component';
+import { ModalEditTweetComponent } from './modal-edit-tweet/modal-edit-tweet.component';
 
 @NgModule({
-  declarations: [TweetComponent, UserComponent, ModalCreateTweetComponent, UserSegmentsComponent],
+  declarations: [TweetComponent, UserComponent, ModalCreateTweetComponent, UserSegmentsComponent, ModalEditTweetComponent],
   imports: [CommonModule, IonicModule.forRoot(), FormsModule, ReactiveFormsModule],
-  exports: [TweetComponent, UserComponent, ModalCreateTweetComponent, UserSegmentsComponent],
+  exports: [TweetComponent, UserComponent, ModalCreateTweetComponent, UserSegmentsComponent, ModalEditTweetComponent],
 })
 export class SharedComponentsModule {}

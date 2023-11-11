@@ -15,5 +15,6 @@ export interface ISignupResponse extends IResponse {
 export interface ISigninResponse extends IResponse {
   data: {
     token: string;
+    userId: string;
   };
 }

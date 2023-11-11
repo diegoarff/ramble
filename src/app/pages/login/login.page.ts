@@ -63,6 +63,7 @@ export class LoginPage implements OnInit {
 
   if (res.status == 'success') {
     await Preferences.set({ key: 'token', value: res.data.token });
+    await Preferences.set({key:"userId", value: res.data.userId})
     this.router.navigate(['/tabs']);
   }
   }
