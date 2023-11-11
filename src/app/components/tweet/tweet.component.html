@@ -9,12 +9,15 @@
       <ion-text color="primary" class="tweet-username"
         >@{{ tweet.user.username }}</ion-text
       >
+      
     </div>
   </div> 
   <div *ngIf="checkUser">
     <ion-icon name="ellipsis-vertical" (click)="showOptions($event)" size="large"></ion-icon>
   </div>
 </div>
+<ion-text class="replyLink" *ngIf="tweet.isReplyTo" color="medium" (click)="sendToReply()">See what is this replying to</ion-text>
+
   <div (click)="redirectToTweet()">
     <div class="tweet-content">
       <ion-text>{{ tweet.content }}</ion-text>

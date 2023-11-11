@@ -5,6 +5,7 @@ import { TweetsService } from 'src/app/services/tweets.service';
 import { Preferences } from '@capacitor/preferences';
 import { ModalController } from '@ionic/angular';
 import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
+import { terminate } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-tweet',
@@ -22,6 +23,7 @@ export class TweetComponent implements OnInit {
   @ViewChild('popover') popover: any;
   ngOnInit() {
     this.getUserID();
+    console.log(this.tweet);
   }
 
 
@@ -68,6 +70,12 @@ async getUserID(){
       window.location.reload();
     }
     this.popover.dismiss();
+  }
+
+async  sendToReply() {
+    const res = await this.tweetService.getTweet(this.tweet.isReplyTo!)
+    
+  this.router.navigate(['/view-tweet', this.tweet.isReplyTo], {state: { tweet: res.data } })
   }
 
   async openEditModal(){
