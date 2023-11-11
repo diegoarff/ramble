@@ -8,7 +8,7 @@ import { ISignupResponse, ISigninResponse } from '../interfaces';
 })
 export class AuthService {
   http = inject(HttpClient);
-  baseUrl = 'http://localhost:3000/auth';
+  baseUrl = 'https://ramble.cyclic.app/auth';
 
   async  signup(user: FormData): Promise<ISignupResponse> {
     return lastValueFrom( this.http.post<ISignupResponse>(`${this.baseUrl}/signup`, user));
