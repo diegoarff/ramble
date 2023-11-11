@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()" color="danger">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="tweetId.length === 0"> Create ramble </ion-title>
+    <ion-title *ngIf="tweetId.length > 0"> Reply to ramble </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        class="save-btn"
+        (click)="editTweet()"
+        color="primary"
+        fill="solid"
+        [disabled]="createTweetForm.invalid"
+        [strong]="true"
+        shape="round"
+      >
+        Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="createTweetForm">
+    <ion-textarea
+      fill="outline"
+      placeholder="What's on your mind?"
+      [autoGrow]="true"
+      [counter]="true"
+      maxlength="280"
+      formControlName="content"
+    >
+    </ion-textarea>
+  </form>
+  <div class="image-container" *ngIf="image">
+    <img [src]="image" alt="image" style="width: 100%; height: auto" />
+    <ion-fab>
+      <ion-fab-button
+        class="remove-image-btn"
+        (click)="removeImage()"
+        size="small"
+      >
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+  <ion-button *ngIf="!image" expand="block" (click)="uploadImage()"
+    >Upload image</ion-button
+  >
+</ion-content>

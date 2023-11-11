@@ -29,7 +29,7 @@ export class TweetsService {
 
   async updateTweet(
     tweetId: string,
-    tweet: FormData
+    tweet: object,
   ): Promise<ITweetBasicResponse> {
     return lastValueFrom(
       this.http.put<ITweetBasicResponse>(`${this.baseUrl}/${tweetId}`, tweet)
