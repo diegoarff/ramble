@@ -24,6 +24,10 @@ export interface IUserListResponse extends IResponse {
   data: IUserBasic[];
 }
 
+export interface IUserWithCountsResponse extends IResponse {
+  data: IUserWithCounts;
+}
+
 export interface IUserSearchResponse extends IResponse {
   data: IUserWithCounts[];
 }

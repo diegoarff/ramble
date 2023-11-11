@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalCreateTweetComponent } from 'src/app/components/modal-create-tweet/modal-create-tweet.component';
 import { ITweet } from 'src/app/interfaces/Tweets';
@@ -12,6 +13,7 @@ import { TweetsService } from 'src/app/services/tweets.service';
 export class Tab1Page implements OnInit {
   tweetsService = inject(TweetsService);
   modalCtrl = inject(ModalController);
+  router = inject(Router);
   segment: string = 'recent';
   tweets: ITweet[] = [];
 
@@ -39,6 +41,10 @@ export class Tab1Page implements OnInit {
     if (data) {
       this.loadTweets();
     }
+  }
+
+  async redirectToProfile() {
+    this.router.navigate(['/my-profile']);
   }
 
   async loadTweets() {
@@ -76,7 +82,4 @@ export class Tab1Page implements OnInit {
 
     event.target.complete();
   }
-
-  
- 
 }

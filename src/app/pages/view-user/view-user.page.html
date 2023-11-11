@@ -34,7 +34,7 @@
       <ion-text
         *ngIf="user.hasMeBlocked === false &&  user.blocked=== false"
         color="medium"
-        >Joined {{user.createdAt.slice(0,10)}}
+        >Joined in {{user.createdAt | date}}
       </ion-text>
     </div>
     <div

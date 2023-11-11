@@ -19,6 +19,7 @@ export class TweetComponent implements OnInit {
   @Input() tweet: ITweet = {} as ITweet;
   loading: boolean = false;
   checkUser: boolean = false;
+  authUserId: string | null = '';
 
   @ViewChild('popover') popover: any;
   ngOnInit() {
@@ -26,22 +27,28 @@ export class TweetComponent implements OnInit {
     console.log(this.tweet);
   }
 
-
   redirectToTweet() {
     this.router.navigate(['/view-tweet', this.tweet._id], {
       state: { tweet: this.tweet },
     });
   }
 
-async getUserID(){
-  const { value } =  await Preferences.get({ key: 'userId' });
-  this.checkUser = (this.tweet.user._id == value);
-}
+  async getUserID() {
+    const { value } = await Preferences.get({ key: 'userId' });
+    this.checkUser = this.tweet.user._id == value;
+    this.authUserId = value;
+  }
 
   redirectToUser() {
+
+    if (this.tweet.user._id === this.authUserId) {
+      this.router.navigate(['/my-profile']);
+      return;
+    }
+
     this.router.navigate(['/view-user', this.tweet.user._id]);
   }
-  
+
   async likeTweet() {
     if (this.loading) return;
     this.loading = true;
@@ -95,5 +102,4 @@ async  sendToReply() {
       window.location.reload();
     }
   }
-  
 }
