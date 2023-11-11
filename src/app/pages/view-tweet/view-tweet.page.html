@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tweet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="reply()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <app-tweet [tweet]="tweet"></app-tweet>
+  <div>
+    <h4>Replies</h4>
+  </div>
+  <ng-container *ngIf="replies.length > 0">
+    <app-tweet *ngFor="let reply of replies" [tweet]="reply"></app-tweet>
+  </ng-container>
+  <div *ngIf="replies.length === 0">
+    <ion-text color="medium">No replies yet</ion-text>
+  </div>
+</ion-content>

@@ -1,0 +1,57 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+.user-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+  width: 100%;
+}
+.user-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
+
+.user-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 30px;
+  width: 100%;
+  margin: 30px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 10px;
+}
+.name {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px;
+}
+
+.bio {
+  margin-top: 10px;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.blocked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>User</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="user" class="user-container">
+    <div class="user-header">
+      <div>
+        <img class="avatar" src="{{ user.avatar }}" />
+      </div>
+      <div *ngIf="user.hasMeBlocked === false">
+        <ion-button *ngIf="user.blocked=== false" (click)="followUser()"
+          >{{user.following? "Followed":"Follow"}}</ion-button
+        >
+        <ion-button color="danger" (click)="blockUser()"
+          >{{user.blocked? "Unblock":"Block"}}</ion-button
+        >
+      </div>
+    </div>
+    <div class="user-content">
+      <div class="name">
+        <ion-text> {{ user.name }} </ion-text>
+        <ion-text color="medium"> @{{ user.username }} </ion-text>
+      </div>
+      <ion-text
+        *ngIf="user.hasMeBlocked === false && user.blocked=== false"
+        class="bio"
+        >{{ user.bio }}</ion-text
+      >
+      <ion-text
+        *ngIf="user.hasMeBlocked === false &&  user.blocked=== false"
+        color="medium"
+        >Joined in {{user.createdAt | date}}
+      </ion-text>
+    </div>
+    <div
+      *ngIf="user.hasMeBlocked === false && user.blocked === false"
+      class="user-footer"
+    >
+      <ion-text (click)="gotoFollows('following')">{{ user.followingCount }} Following</ion-text>
+      <ion-text (click)="gotoFollows('followers')">{{ user.followersCount }} Followers</ion-text>
+    </div>
+    <div class="blocked" *ngIf="user.hasMeBlocked === true">
+      <ion-text>You're blocked</ion-text>
+      <ion-text color="medium"
+        >You can't follow or see @{{user.username}}'s posts</ion-text
+      >
+    </div>
+
+    <div
+      class="blocked"
+      *ngIf="user.blocked === true && user.hasMeBlocked === false"
+    >
+      <ion-text>@{{user.username}} is blocked</ion-text>
+      <ion-text color="medium">
+        You can't see @{{user.username}}'s posts</ion-text
+      >
+    </div>
+  </div>
+  <app-user-segments [userId]="userId"></app-user-segments>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="user" class="user-container">
+    <div class="user-header">
+      <div>
+        <img class="avatar" src="{{ user.avatar }}" />
+      </div>
+      <ion-button (click)="redirectToSettings()">Settings</ion-button>
+    </div>
+    <div class="user-content">
+      <div class="name">
+        <ion-text> {{ user.name }} </ion-text>
+        <ion-text color="medium"> @{{ user.username }} </ion-text>
+      </div>
+      <ion-text class="bio">{{ user.bio }}</ion-text>
+      <ion-text color="medium">Joined in {{user.createdAt | date }} </ion-text>
+    </div>
+    <div class="user-footer">
+      <ion-text>{{ user.followingCount }} Following</ion-text>
+      <ion-text>{{ user.followersCount }} Followers</ion-text>
+    </div>
+  </div>
+  <app-user-segments *ngIf="user" [userId]="user._id"></app-user-segments>
+</ion-content>

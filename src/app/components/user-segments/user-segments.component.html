@@ -1,0 +1,21 @@
+<ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+
+<ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+  <ion-segment-button *ngFor="let seg of segments" [value]="seg.name">{{
+    seg.name | titlecase
+  }}</ion-segment-button>
+</ion-segment>
+
+<ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
+  No rambles
+</ion-text>
+
+<!-- Implement loading states -->
+
+<app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+
+<ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>

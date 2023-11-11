@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Home </ion-title>
+    <ion-fab-button slot="end" (click)="redirectToProfile()" size="small">
+      <ion-icon name="person"></ion-icon>
+    </ion-fab-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="createTweet()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="recent"> Recent </ion-segment-button>
+    <ion-segment-button value="following"> Following </ion-segment-button>
+  </ion-segment>
+
+  <ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
+    No rambles
+  </ion-text>
+
+  <!-- Implement loading states -->
+
+  <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

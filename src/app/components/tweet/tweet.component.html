@@ -1,0 +1,77 @@
+<div class="tweet-container">
+  <div class="header-popover">
+    <div class="tweet-header" (click)="redirectToUser()">
+      <div class="tweet-header-avatar">
+        <img src="{{ tweet.user.avatar }}" />
+      </div>
+      <div class="tweet-header-name">
+        <ion-text class="tweet-name">{{ tweet.user.name }}</ion-text>
+        <ion-text color="primary" class="tweet-username"
+          >@{{ tweet.user.username }}</ion-text
+        >
+      </div>
+    </div>
+    <div *ngIf="checkUser">
+      <ion-icon
+        name="ellipsis-vertical"
+        (click)="showOptions($event)"
+        size="large"
+      ></ion-icon>
+    </div>
+  </div>
+  <ion-text
+    class="replyLink"
+    *ngIf="tweet.isReplyTo"
+    color="medium"
+    (click)="sendToReply()"
+    >See what is this replying to</ion-text
+  >
+
+  <div (click)="redirectToTweet()">
+    <div class="tweet-content">
+      <ion-text>{{ tweet.content }}</ion-text>
+      <div class="image-container" *ngIf="tweet.image">
+        <img class="image" [src]="tweet.image" />
+      </div>
+    </div>
+    <div class="tweet-footer">
+      <div class="tweet-footer-buttons">
+        <div class="tweet-footer-icon">
+          <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
+          <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
+        </div>
+        <div class="tweet-footer-icon" (click)="likeTweet()">
+          <ion-icon
+            *ngIf="!tweet.liked"
+            name="heart-outline"
+            color="medium"
+          ></ion-icon>
+          <ion-icon *ngIf="tweet.liked" name="heart" color="danger"></ion-icon>
+          <ion-text [color]="tweet.liked ? 'danger' : 'medium'">{{
+            tweet.likeCount
+          }}</ion-text>
+        </div>
+      </div>
+      <div class="tweet-footer-date">
+        <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ion-popover #popover reference="event">
+  <ng-template>
+    <ion-content>
+      <ion-list>
+        <ion-item (click)="deleteTweet()">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          <ion-label>Delete</ion-label>
+        </ion-item>
+        <ion-item (click)="openEditModal()">
+          <ion-icon name="pencil-outline" slot="start"></ion-icon>
+          <ion-label>Edit</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-popover>
