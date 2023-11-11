@@ -39,9 +39,14 @@ const routes: Routes = [
   {
     path: 'my-profile',
     loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
-  },  {
+  },
+  {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'view-follows/:id',
+    loadChildren: () => import('./pages/view-follows/view-follows.module').then( m => m.ViewFollowsPageModule)
   }
 
 ];

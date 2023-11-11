@@ -41,8 +41,8 @@
       *ngIf="user.hasMeBlocked === false && user.blocked === false"
       class="user-footer"
     >
-      <ion-text>{{ user.followingCount }} Following</ion-text>
-      <ion-text>{{ user.followersCount }} Followers</ion-text>
+      <ion-text (click)="gotoFollows('following')">{{ user.followingCount }} Following</ion-text>
+      <ion-text (click)="gotoFollows('followers')">{{ user.followersCount }} Followers</ion-text>
     </div>
     <div class="blocked" *ngIf="user.hasMeBlocked === true">
       <ion-text>You're blocked</ion-text>
