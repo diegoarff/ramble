@@ -18,8 +18,8 @@ export class ModalCreateTweetComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
 
   tweetId: string = '';
-  image: any;
-  blob: any;
+  image: any = null;
+  blob: any = null;
   content: any;
 
   ngOnInit() {
@@ -40,7 +40,13 @@ export class ModalCreateTweetComponent implements OnInit {
   async createTweet() {
     if (this.createTweetForm.invalid) return;
     const { content } = this.createTweetForm.value;
-    const image = await this.imageService.uploadImage(this.blob, this.image);
+
+    let image = '';
+
+    if (this.image) {
+      image = await this.imageService.uploadImage(this.blob, this.image);
+    }
+
     const tweet = { content, image };
 
     if (this.tweetId) {
