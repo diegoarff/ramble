@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div>
+    <!-- Update profile -->
+    <ion-text color="dark"><h5>Update your profile</h5></ion-text>
+    <ion-text color="medium"
+      ><p>
+        You will be sent to the login page after updating your profile
+      </p></ion-text
+    >
+
+    <form (ngSubmit)="updateProfile()" [formGroup]="loginForm">
+      <ion-input
+        fill="solid"
+        label="Username"
+        labelPlacement="floating"
+        type="text"
+        formControlName="identifier"
+      ></ion-input>
+      <ion-note
+        *ngIf="loginForm.get('identifier')?.invalid && loginForm.get('identifier')?.touched"
+        color="danger"
+      >
+        {{ getErrorMessage('identifier') }}
+      </ion-note>
+
+      <ion-input
+        fill="solid"
+        label="Password"
+        labelPlacement="floating"
+        type="password"
+        formControlName="password"
+        maxlength="15"
+        [counter]="true"
+      ></ion-input>
+      <ion-note
+        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        color="danger"
+      >
+        {{ getErrorMessage('password') }}
+      </ion-note>
+      <ion-textarea
+        fill="solid"
+        label="Biography"
+        labelPlacement="floating"
+        [counter]="true"
+        maxlength="160"
+        formControlName="bio"
+      ></ion-textarea>
+      <ion-note
+        *ngIf="loginForm.get('bio')?.invalid && loginForm.get('bio')?.touched"
+        color="danger"
+      >
+        {{ getErrorMessage('bio') }}
+      </ion-note>
+      <ion-button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        expand="block"
+        shape="round"
+        color="primary"
+        strong="true"
+        >Update profile</ion-button
+      >
+    </form>
+  </div>
+  <div>
+    <!-- Update password -->
+    <ion-text color="dark"><h5>Change your password</h5></ion-text>
+    <ion-text color="medium"
+      ><p>
+        You will be sent to the login page after changing your password
+      </p></ion-text
+    >
+  </div>
+  <div>
+    <!-- Critical -->
+    <ion-text color="dark"><h5>Account</h5></ion-text>
+
+    <ion-button expand="block" shape="round" color="primary" strong="true"
+      >Logout</ion-button
+    >
+    <ion-button expand="block" shape="round" color="danger" strong="true"
+      >Delete account</ion-button
+    >
+    <ion-text color="medium"
+      ><p>
+        WARNING! This action is irreversible. You will lose all your data.
+      </p></ion-text
+    >
+  </div>
+</ion-content>

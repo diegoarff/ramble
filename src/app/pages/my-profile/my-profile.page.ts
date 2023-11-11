@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { IUserWithCounts } from 'src/app/interfaces';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -8,6 +9,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./my-profile.page.scss'],
 })
 export class MyProfilePage implements OnInit {
+  private router = inject(Router);
   private usersService = inject(UsersService);
   user: IUserWithCounts | null = null;
 
@@ -25,5 +27,9 @@ export class MyProfilePage implements OnInit {
     } else {
       // show alert
     }
+  }
+
+  redirectToSettings() {
+    this.router.navigate(['/settings']);
   }
 }

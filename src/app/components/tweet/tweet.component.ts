@@ -40,7 +40,6 @@ export class TweetComponent implements OnInit {
   }
 
   redirectToUser() {
-
     if (this.tweet.user._id === this.authUserId) {
       this.router.navigate(['/my-profile']);
       return;
@@ -79,14 +78,15 @@ export class TweetComponent implements OnInit {
     this.popover.dismiss();
   }
 
-async  sendToReply() {
-    const res = await this.tweetService.getTweet(this.tweet.isReplyTo!)
-    
-  this.router.navigate(['/view-tweet', this.tweet.isReplyTo], {state: { tweet: res.data } })
+  async sendToReply() {
+    const res = await this.tweetService.getTweet(this.tweet.isReplyTo!);
+
+    this.router.navigate(['/view-tweet', this.tweet.isReplyTo], {
+      state: { tweet: res.data },
+    });
   }
 
-  async openEditModal(){
-    
+  async openEditModal() {
     const modal = await this.modalCtrl.create({
       component: ModalEditTweetComponent,
       componentProps: {
