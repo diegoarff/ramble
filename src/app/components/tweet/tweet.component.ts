@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
@@ -13,7 +13,7 @@ export class TweetComponent implements OnInit {
   private tweetService = inject(TweetsService);
   @Input() tweet: ITweet = {} as ITweet;
   loading: boolean = false;
-
+  @ViewChild('popover') popover: any;
   ngOnInit() {}
 
   redirectToTweet() {
@@ -41,5 +41,10 @@ export class TweetComponent implements OnInit {
       }
     }
     this.loading = false;
+  }
+
+  showOptions(event: any) {
+    this.popover.event = event;
+    this.popover.present();
   }
 }

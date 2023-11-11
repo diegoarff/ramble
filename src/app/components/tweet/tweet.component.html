@@ -12,7 +12,7 @@
     </div>
   </div> 
   <div *ngIf="true">
-    <ion-icon name="ellipsis-vertical" [id]="'open-'+tweet._id" size="large"></ion-icon>
+    <ion-icon name="ellipsis-vertical" (click)="showOptions($event)" size="large"></ion-icon>
   </div>
 </div>
   <div (click)="redirectToTweet()">
@@ -48,7 +48,7 @@
 </div>
 
 
-<ion-popover [trigger]="'open-'+tweet._id" >
+<ion-popover #popover reference="event">
   <ng-template>
     <ion-content>
   <ion-list>
