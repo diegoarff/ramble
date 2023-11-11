@@ -9,7 +9,7 @@ import {
   IResponse,
 } from '../interfaces';
 import { lastValueFrom } from 'rxjs';
-import { IUserResponse } from '../interfaces/Users';
+import { IUserResponse, IUserWithCountsResponse } from '../interfaces/Users';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +18,22 @@ export class UsersService {
   http = inject(HttpClient);
   baseUrl = 'http://localhost:3000/users';
 
-  async getMe(): Promise<IUserWithCounts> {
-    return lastValueFrom(this.http.get<IUserWithCounts>(`${this.baseUrl}/me`));
+  async getMe(): Promise<IUserWithCountsResponse> {
+    return lastValueFrom(
+      this.http.get<IUserWithCountsResponse>(`${this.baseUrl}/me`)
+    );
   }
 
-  async updateProfile(user: FormData): Promise<IUserWithCounts> {
-    return lastValueFrom(this.http.put<IUserWithCounts>(`${this.baseUrl}/me`, user));
+  async updateProfile(user: FormData): Promise<IUserWithCountsResponse> {
+    return lastValueFrom(
+      this.http.put<IUserWithCountsResponse>(`${this.baseUrl}/me`, user)
+    );
   }
 
- async  updatePassword(passwords: FormData): Promise<IResponse> {
-    return lastValueFrom(this.http.put<IResponse>(`${this.baseUrl}/me/password`, passwords));
+  async updatePassword(passwords: FormData): Promise<IResponse> {
+    return lastValueFrom(
+      this.http.put<IResponse>(`${this.baseUrl}/me/password`, passwords)
+    );
   }
 
   async deleteAccount(): Promise<IResponse> {
@@ -35,34 +41,42 @@ export class UsersService {
   }
 
   async getUser(userId: string): Promise<IUserResponse> {
-    return lastValueFrom(this.http.get<IUserResponse>(`${this.baseUrl}/${userId}`));
+    return lastValueFrom(
+      this.http.get<IUserResponse>(`${this.baseUrl}/${userId}`)
+    );
   }
 
   async followUser(userId: string): Promise<IResponse> {
-    return lastValueFrom(this.http.post<IResponse>(`${this.baseUrl}/${userId}/follow`, {}));
+    return lastValueFrom(
+      this.http.post<IResponse>(`${this.baseUrl}/${userId}/follow`, {})
+    );
   }
 
   async blockUser(userId: string): Promise<IResponse> {
-    return lastValueFrom(this.http.post<IResponse>(`${this.baseUrl}/${userId}/block`, {}));
+    return lastValueFrom(
+      this.http.post<IResponse>(`${this.baseUrl}/${userId}/block`, {})
+    );
   }
 
   async getFollowersFromUser(userId: string): Promise<IUserListResponse> {
-    return lastValueFrom(this.http.get<IUserListResponse>(
-      `${this.baseUrl}/${userId}/followers`
-    ));
+    return lastValueFrom(
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/followers`)
+    );
   }
 
   async getFollowingFromUser(userId: string): Promise<IUserListResponse> {
-    return lastValueFrom(this.http.get<IUserListResponse>(
-      `${this.baseUrl}/${userId}/following`
-    ));
+    return lastValueFrom(
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/following`)
+    );
   }
 
   async searchUsers(queryParams?: any): Promise<IUserSearchResponse> {
     const params = this.constructQueryParams(queryParams);
-    return lastValueFrom(this.http.get<IUserSearchResponse>(`${this.baseUrl}/search`, {
-      params,
-    }));
+    return lastValueFrom(
+      this.http.get<IUserSearchResponse>(`${this.baseUrl}/search`, {
+        params,
+      })
+    );
   }
 
   private constructQueryParams(queryParams: any): HttpParams {
