@@ -9,7 +9,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class MyProfilePage implements OnInit {
   private usersService = inject(UsersService);
-  user: IUserWithCounts = {} as IUserWithCounts;
+  user: IUserWithCounts | null = null;
+
 
   constructor() {}
 

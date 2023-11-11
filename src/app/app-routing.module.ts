@@ -36,6 +36,10 @@ const routes: Routes = [
     path: 'view-user/:id',
     loadChildren: () => import('./pages/view-user/view-user.module').then( m => m.ViewUserPageModule)
   },
+  {
+    path: 'my-profile',
+    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
+  }
 ];
 @NgModule({
   imports: [

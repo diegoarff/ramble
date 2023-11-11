@@ -18,12 +18,12 @@ export class TweetComponent implements OnInit {
   @Input() tweet: ITweet = {} as ITweet;
   loading: boolean = false;
   checkUser: boolean = false;
+  authUserId: string | null = '';
 
   @ViewChild('popover') popover: any;
   ngOnInit() {
     this.getUserID();
   }
-
 
   redirectToTweet() {
     this.router.navigate(['/view-tweet', this.tweet._id], {
@@ -31,15 +31,22 @@ export class TweetComponent implements OnInit {
     });
   }
 
-async getUserID(){
-  const { value } =  await Preferences.get({ key: 'userId' });
-  this.checkUser = (this.tweet.user._id == value);
-}
+  async getUserID() {
+    const { value } = await Preferences.get({ key: 'userId' });
+    this.checkUser = this.tweet.user._id == value;
+    this.authUserId = value;
+  }
 
   redirectToUser() {
+
+    if (this.tweet.user._id === this.authUserId) {
+      this.router.navigate(['/my-profile']);
+      return;
+    }
+
     this.router.navigate(['/view-user', this.tweet.user._id]);
   }
-  
+
   async likeTweet() {
     if (this.loading) return;
     this.loading = true;
@@ -70,8 +77,7 @@ async getUserID(){
     this.popover.dismiss();
   }
 
-  async openEditModal(){
-    
+  async openEditModal() {
     const modal = await this.modalCtrl.create({
       component: ModalEditTweetComponent,
       componentProps: {
@@ -87,5 +93,4 @@ async getUserID(){
       window.location.reload();
     }
   }
-  
 }

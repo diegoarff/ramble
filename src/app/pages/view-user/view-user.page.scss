@@ -5,13 +5,13 @@
   justify-content: center;
   margin: 10px;
 }
-.user-header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 200px;
-    width: 100%;
+.user-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+  width: 100%;
 }
 .user-content {
   display: flex;
@@ -20,10 +20,7 @@
   justify-content: space-evenly;
   height: 100%;
   width: 100%;
-
-
 }
-
 
 .user-footer {
   display: flex;
@@ -41,21 +38,20 @@
   border-radius: 50%;
   margin: 10px;
 }
-.name{
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 25px;
+.name {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px;
 }
 
 .bio {
-    margin-top: 10px;
-    margin-bottom: 25px;
-    display: block;
-      
+  margin-top: 10px;
+  margin-bottom: 25px;
+  display: block;
 }
 
 .blocked {
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

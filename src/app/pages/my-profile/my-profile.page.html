@@ -27,5 +27,5 @@
       <ion-text>{{ user.followersCount }} Followers</ion-text>
     </div>
   </div>
-  <app-user-segments [userId]="user._id"></app-user-segments>
+  <app-user-segments *ngIf="user" [userId]="user._id"></app-user-segments>
 </ion-content>
