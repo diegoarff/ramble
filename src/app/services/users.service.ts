@@ -59,15 +59,27 @@ export class UsersService {
     );
   }
 
-  async getFollowersFromUser(userId: string): Promise<IUserListResponse> {
+  async getFollowersFromUser(
+    userId: string,
+    queryParams?: any
+  ): Promise<IUserListResponse> {
+    const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
-      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/followers`)
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/followers`, {
+        params,
+      })
     );
   }
 
-  async getFollowingFromUser(userId: string): Promise<IUserListResponse> {
+  async getFollowingFromUser(
+    userId: string,
+    queryParams?: any
+  ): Promise<IUserListResponse> {
+    const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
-      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/following`)
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/following`, {
+        params,
+      })
     );
   }
 
