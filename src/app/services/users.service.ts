@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 
 import {
   IUserListResponse,
@@ -90,6 +91,11 @@ export class UsersService {
         params,
       })
     );
+  }
+
+  async logout(): Promise<void> {
+    await Preferences.remove({ key: 'token' });
+    await Preferences.remove({ key: 'userId' });
   }
 
   private constructQueryParams(queryParams: any): HttpParams {

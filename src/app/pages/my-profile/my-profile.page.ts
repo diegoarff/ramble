@@ -30,6 +30,8 @@ export class MyProfilePage implements OnInit {
   }
 
   redirectToSettings() {
-    this.router.navigate(['/settings']);
+    this.router.navigate(['/settings'], {
+      state: { user: this.user },
+    });
   }
 }

@@ -59,13 +59,13 @@ export class LoginPage implements OnInit {
 
     console.log(this.loginForm.value);
 
-  const res = await  this.authService.signin(this.loginForm.value)
+    const res = await this.authService.signin(this.loginForm.value);
 
-  if (res.status == 'success') {
-    await Preferences.set({ key: 'token', value: res.data.token });
-    await Preferences.set({key:"userId", value: res.data.userId})
-    this.router.navigate(['/tabs']);
-  }
+    if (res.status == 'success') {
+      await Preferences.set({ key: 'token', value: res.data.token });
+      await Preferences.set({ key: 'userId', value: res.data.userId });
+      this.router.navigate(['/tabs']);
+    }
   }
 
   getErrorMessage(controlName: string) {

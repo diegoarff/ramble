@@ -96,8 +96,6 @@ export class RegisterPage implements OnInit {
   async register() {
     if (this.registerForm.invalid) return;
 
-    console.log(this.registerForm.value);
-
     const res = await this.authService.signup(this.registerForm.value);
     if (res.status == 'success') {
       this.router.navigate(['/login']);
