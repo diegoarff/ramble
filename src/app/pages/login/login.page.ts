@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Preferences } from '@capacitor/preferences';
-import { LoadingController, ToastController } from '@ionic/angular';
-import { HttpErrorResponse } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,6 @@ export class LoginPage implements OnInit {
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private toastCtrl = inject(ToastController);
-  private loadingCtrl = inject(LoadingController);
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     identifier: {
@@ -62,17 +60,17 @@ export class LoginPage implements OnInit {
     }
 
     const toast = await this.toastCtrl.create({
+      message: 'Login successful',
       duration: 2000,
       position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
     });
 
     try {
       const res = await this.authService.signin(this.loginForm.value);
 
       if (res.status == 'success') {
-        toast.message = res.message;
-        toast.icon = 'checkmark-circle-outline';
-        toast.color = 'success';
         await toast.present();
 
         await Preferences.set({ key: 'token', value: res.data.token });

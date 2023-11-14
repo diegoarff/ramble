@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
 import { Preferences } from '@capacitor/preferences';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
 import { terminate } from '@angular/fire/firestore';
 
@@ -16,15 +16,17 @@ export class TweetComponent implements OnInit {
   private modalCtrl = inject(ModalController);
   private router = inject(Router);
   private tweetService = inject(TweetsService);
+  private toastCtrl = inject(ToastController);
+
   @Input() tweet: ITweet = {} as ITweet;
+  @ViewChild('popover') popover: any;
+
   loading: boolean = false;
   checkUser: boolean = false;
   authUserId: string | null = '';
 
-  @ViewChild('popover') popover: any;
   ngOnInit() {
     this.getUserID();
-    console.log(this.tweet);
   }
 
   redirectToTweet() {
@@ -72,11 +74,27 @@ export class TweetComponent implements OnInit {
   }
 
   async deleteTweet() {
-    const res = await this.tweetService.deleteTweet(this.tweet._id);
-    if (res.status === 'success') {
-      window.location.reload();
+    const toast = await this.toastCtrl.create({
+      message: 'Tweet deleted',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.tweetService.deleteTweet(this.tweet._id);
+      
+      if (res.status === 'success') {
+        await toast.present();
+        // Consider removing this for a better approach
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.popover.dismiss();
     }
-    this.popover.dismiss();
   }
 
   async sendToReply() {

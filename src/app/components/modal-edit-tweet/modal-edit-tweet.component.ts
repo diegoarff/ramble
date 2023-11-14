@@ -1,6 +1,10 @@
 import { Component, OnInit, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { GetImageService } from 'src/app/services/get-image.service';
 import { TweetsService } from 'src/app/services/tweets.service';
@@ -10,8 +14,7 @@ import { TweetsService } from 'src/app/services/tweets.service';
   templateUrl: './modal-edit-tweet.component.html',
   styleUrls: ['./modal-edit-tweet.component.scss'],
 })
-export class ModalEditTweetComponent  implements OnInit {
-
+export class ModalEditTweetComponent implements OnInit {
   createTweetForm: FormGroup = new FormGroup({});
   @Input() tweet: ITweet = {} as ITweet;
 
@@ -19,25 +22,27 @@ export class ModalEditTweetComponent  implements OnInit {
   private tweetsService = inject(TweetsService);
   private modalCtrl = inject(ModalController);
   private formBuilder = inject(FormBuilder);
+  private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
 
   tweetId: string = '';
   image: any = null;
   blob: any = null;
   content: any;
+  loading: boolean = false;
   validateIMG: boolean = false;
   firebaseImage: any = null;
+
   ngOnInit() {
     this.image = this.tweet.image;
-    console.log(this.tweetId);
     this.createTweetForm = this.formBuilder.group({
       content: [this.tweet.content, [Validators.required]],
     });
-    console.log(this.tweet);
   }
 
   async uploadImage() {
     const res = await this.imageService.takePicture();
-    this.validateIMG= true;
+    this.validateIMG = true;
     if (res) {
       this.image = res.image.dataUrl;
       this.firebaseImage = res.image;
@@ -46,22 +51,51 @@ export class ModalEditTweetComponent  implements OnInit {
   }
 
   async editTweet() {
-    if (this.createTweetForm.invalid) return;
+    if (this.createTweetForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
     const { content } = this.createTweetForm.value;
 
     let image = '';
 
-    if (this.image && this.validateIMG == true) {
-      image = await this.imageService.uploadImage(this.blob, this.firebaseImage);
-    } else{
-      image = this.image;
+    try {
+      if (this.image && this.validateIMG == true) {
+        const loading = await this.loadingCtrl.create({
+          spinner: 'crescent',
+        });
+
+        await loading.present();
+        image = await this.imageService.uploadImage(
+          this.blob,
+          this.firebaseImage
+        );
+        await loading.dismiss();
+      } else {
+        image = this.image;
+      }
+
+      const tweet = { content, image };
+
+      const toast = await this.toastCtrl.create({
+        message: 'Tweet edited',
+        duration: 2000,
+        icon: 'checkmark-circle-outline',
+        color: 'success',
+        position: 'bottom',
+      });
+
+      await this.tweetsService.updateTweet(this.tweet._id, tweet);
+
+      await toast.present();
+
+      return this.modalCtrl.dismiss(true);
+    } catch (error) {
+      console.log(error);
+      return;
     }
-
-    const tweet = { content, image };
-
-    await this.tweetsService.updateTweet(this.tweet._id, tweet)
-
-    return this.modalCtrl.dismiss(true);
   }
 
   dismissModal() {

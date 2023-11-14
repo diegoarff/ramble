@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
+import { ToastController } from '@ionic/angular';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class SettingsPage implements OnInit {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   private usersService = inject(UsersService);
+  private toastCtrl = inject(ToastController);
 
   user: any = this.router.getCurrentNavigation()!.extras.state!['user'];
 
@@ -110,10 +112,24 @@ export class SettingsPage implements OnInit {
     if (this.profileForm.invalid) {
       return;
     }
-    const res = await this.usersService.updateProfile(this.profileForm.value);
-    if (res.status == 'success') {
-      await this.usersService.logout();
-      this.router.navigate(['/login']);
+
+    const toast = await this.toastCtrl.create({
+      message: 'Profile updated successfully',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.usersService.updateProfile(this.profileForm.value);
+      if (res.status == 'success') {
+        await toast.present();
+
+        this.router.navigate(['/tabs']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -121,10 +137,27 @@ export class SettingsPage implements OnInit {
     if (this.passwordForm.invalid) {
       return;
     }
-    const res = await this.usersService.updatePassword(this.passwordForm.value);
-    if (res.status == 'success') {
-      await this.usersService.logout();
-      this.router.navigate(['/login']);
+
+    const toast = await this.toastCtrl.create({
+      message: 'Password changed successfully',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.usersService.updatePassword(
+        this.passwordForm.value
+      );
+
+      if (res.status == 'success') {
+        await toast.present();
+
+        this.router.navigate(['/tabs']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -134,10 +167,24 @@ export class SettingsPage implements OnInit {
   }
 
   async deleteAccount() {
-    const res = await this.usersService.deleteAccount();
-    if (res.status == 'success') {
-      await this.usersService.logout();
-      this.router.navigate(['/login']);
+    const toast = await this.toastCtrl.create({
+      message: 'Account deleted successfully',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.usersService.deleteAccount();
+      if (res.status == 'success') {
+        await toast.present();
+
+        await this.usersService.logout();
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

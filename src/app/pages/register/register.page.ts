@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class RegisterPage implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+  private toastCtrl = inject(ToastController);
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -89,16 +91,29 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  // passwordMatch() {
-  //   return this.registerForm.get('password') === this.registerForm.get('confirm_password');
-  // }
-
   async register() {
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid) {
+      return;
+    }
 
-    const res = await this.authService.signup(this.registerForm.value);
-    if (res.status == 'success') {
-      this.router.navigate(['/login']);
+    const toast = await this.toastCtrl.create({
+      message: 'Registration successful',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.authService.signup(this.registerForm.value);
+
+      if (res.status == 'success') {
+        await toast.present();
+
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
