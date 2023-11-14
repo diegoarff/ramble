@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Preferences } from '@capacitor/preferences';
+import { LoadingController, ToastController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,8 @@ export class LoginPage implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
+  private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     identifier: {
@@ -57,14 +61,27 @@ export class LoginPage implements OnInit {
       return;
     }
 
-    console.log(this.loginForm.value);
+    const toast = await this.toastCtrl.create({
+      duration: 2000,
+      position: 'bottom',
+    });
 
-    const res = await this.authService.signin(this.loginForm.value);
+    try {
+      const res = await this.authService.signin(this.loginForm.value);
 
-    if (res.status == 'success') {
-      await Preferences.set({ key: 'token', value: res.data.token });
-      await Preferences.set({ key: 'userId', value: res.data.userId });
-      this.router.navigate(['/tabs']);
+      if (res.status == 'success') {
+        toast.message = res.message;
+        toast.icon = 'checkmark-circle-outline';
+        toast.color = 'success';
+        await toast.present();
+
+        await Preferences.set({ key: 'token', value: res.data.token });
+        await Preferences.set({ key: 'userId', value: res.data.userId });
+
+        this.router.navigate(['/tabs']);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
