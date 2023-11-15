@@ -15,7 +15,7 @@
     No users
   </ion-text>
   <app-user *ngFor="let user of users" [user]="user"></app-user>
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll *ngIf="users.length > 0" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

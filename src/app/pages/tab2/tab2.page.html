@@ -71,7 +71,7 @@
       <app-user *ngFor="let user of users" [user]="user"></app-user>
     </div>
   </ng-container>
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll *ngIf="users.length > 0 || tweets.length > 0" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
