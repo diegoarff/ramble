@@ -13,8 +13,8 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
-  <app-tweet [tweet]="tweet"></app-tweet>
+
+  <app-tweet *ngIf="tweet" [tweet]="tweet"></app-tweet>
   <div>
     <h4>Replies</h4>
   </div>

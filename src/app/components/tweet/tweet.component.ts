@@ -84,7 +84,7 @@ export class TweetComponent implements OnInit {
 
     try {
       const res = await this.tweetService.deleteTweet(this.tweet._id);
-      
+
       if (res.status === 'success') {
         await toast.present();
         // Consider removing this for a better approach
