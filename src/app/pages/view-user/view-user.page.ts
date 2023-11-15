@@ -26,10 +26,12 @@ export class ViewUserPage implements OnInit {
   }
 
   async blockUser() {
+    
     const res = await this.userService.blockUser(this.userId!);
     console.log(res);
     if (res.status === 'success') {
       if (res.message == 'User blocked') {
+        this.user.following = false;
         this.user.blocked = true;
       } else if (res.message == 'User unblocked') {
         this.user.blocked = false;
