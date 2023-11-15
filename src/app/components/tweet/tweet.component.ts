@@ -17,7 +17,7 @@ export class TweetComponent implements OnInit {
   private router = inject(Router);
   private tweetService = inject(TweetsService);
   private toastCtrl = inject(ToastController);
-  @Output() deleteEvent = new EventEmitter();
+  @Output() reloadEvent = new EventEmitter();
   @Input() tweet: ITweet = {} as ITweet;
   @ViewChild('popover') popover: any;
 
@@ -87,8 +87,8 @@ export class TweetComponent implements OnInit {
 
       if (res.status === 'success') {
         await toast.present();
-        // Consider removing this for a better approach
-        this.deleteEvent.emit();
+
+        this.reloadEvent.emit();
       }
     } catch (error) {
       console.log(error);
@@ -118,7 +118,8 @@ export class TweetComponent implements OnInit {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      window.location.reload();
+      this.popover.dismiss();
+      this.reloadEvent.emit();
     }
   }
 }

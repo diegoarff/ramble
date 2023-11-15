@@ -19,8 +19,7 @@ export class ViewTweetPage implements OnInit {
   tweetId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
 
   ngOnInit() {
-    this.getTweet();
-    this.getReplies();
+    this.loadData();
   }
 
   async getTweet() {
@@ -45,6 +44,11 @@ export class ViewTweetPage implements OnInit {
     }
   }
 
+  async loadData() {
+    await this.getReplies();
+    await this.getTweet();
+  }
+
   async reply() {
     const modal = await this.modalCtrl.create({
       component: ModalCreateTweetComponent,
@@ -58,13 +62,7 @@ export class ViewTweetPage implements OnInit {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      this.getTweet();
-      this.getReplies();
+      await this.loadData();
     }
-   
-  }
-  getDeleteEvent() {
-    this.getTweet();
-    this.getReplies();
   }
 }
