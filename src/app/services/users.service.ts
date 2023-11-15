@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 
 import {
   IUserListResponse,
@@ -16,7 +17,8 @@ import { IUserResponse, IUserWithCountsResponse } from '../interfaces/Users';
 })
 export class UsersService {
   http = inject(HttpClient);
-  baseUrl = 'https://ramble.cyclic.app/users';
+  // baseUrl = 'https://ramble.cyclic.app/users';
+  baseUrl = 'http://localhost:3000/users';
 
   async getMe(): Promise<IUserWithCountsResponse> {
     return lastValueFrom(
@@ -58,15 +60,27 @@ export class UsersService {
     );
   }
 
-  async getFollowersFromUser(userId: string): Promise<IUserListResponse> {
+  async getFollowersFromUser(
+    userId: string,
+    queryParams?: any
+  ): Promise<IUserListResponse> {
+    const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
-      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/followers`)
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/followers`, {
+        params,
+      })
     );
   }
 
-  async getFollowingFromUser(userId: string): Promise<IUserListResponse> {
+  async getFollowingFromUser(
+    userId: string,
+    queryParams?: any
+  ): Promise<IUserListResponse> {
+    const params = this.constructQueryParams(queryParams);
     return lastValueFrom(
-      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/following`)
+      this.http.get<IUserListResponse>(`${this.baseUrl}/${userId}/following`, {
+        params,
+      })
     );
   }
 
@@ -77,6 +91,11 @@ export class UsersService {
         params,
       })
     );
+  }
+
+  async logout(): Promise<void> {
+    await Preferences.remove({ key: 'token' });
+    await Preferences.remove({ key: 'userId' });
   }
 
   private constructQueryParams(queryParams: any): HttpParams {

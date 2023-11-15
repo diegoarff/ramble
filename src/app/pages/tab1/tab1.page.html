@@ -5,6 +5,12 @@
       <ion-icon name="person"></ion-icon>
     </ion-fab-button>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="recent"> Recent </ion-segment-button>
+      <ion-segment-button value="following"> Following </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -18,11 +24,6 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="recent"> Recent </ion-segment-button>
-    <ion-segment-button value="following"> Following </ion-segment-button>
-  </ion-segment>
-
   <ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
     No rambles
   </ion-text>
@@ -31,7 +32,10 @@
 
   <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll
+    *ngIf="tweets.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

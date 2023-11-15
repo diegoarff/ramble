@@ -13,7 +13,7 @@
         (click)="createTweet()"
         color="primary"
         fill="solid"
-        [disabled]="createTweetForm.invalid"
+        [disabled]="createTweetForm.invalid || loading"
         [strong]="true"
         shape="round"
       >

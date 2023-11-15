@@ -1,19 +1,23 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
     <ion-searchbar
       [debounce]="1500"
       (ionInput)="handleInput($event)"
     ></ion-searchbar>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <ng-container>
+  <ion-toolbar>
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="rambles"> Rambles </ion-segment-button>
       <ion-segment-button value="users"> Users </ion-segment-button>
     </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
+  <ng-container>
     <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -67,7 +71,7 @@
       <app-user *ngFor="let user of users" [user]="user"></app-user>
     </div>
   </ng-container>
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll *ngIf="users.length > 0 || tweets.length > 0" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
