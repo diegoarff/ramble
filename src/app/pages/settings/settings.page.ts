@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ToggleCustomEvent } from '@ionic/angular';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -19,7 +19,8 @@ export class SettingsPage implements OnInit {
   private usersService = inject(UsersService);
   private toastCtrl = inject(ToastController);
 
-  user: any = this.router.getCurrentNavigation()!.extras.state!['user'];
+  user = this.router.getCurrentNavigation()!.extras.state!['user'];
+  themeToggle = false;
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -57,6 +58,8 @@ export class SettingsPage implements OnInit {
   };
 
   ngOnInit() {
+    this.initializeDarkValue();
+
     this.profileForm = this.formBuilder.group({
       name: [
         this.user.name,
@@ -105,6 +108,26 @@ export class SettingsPage implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/),
         ],
       ],
+    });
+  }
+
+  // Check/uncheck the toggle and update the theme based on isDark
+  async initializeDarkValue() {
+    const { value } = await Preferences.get({ key: 'theme' });
+    this.themeToggle = value === 'dark' ? true : false;
+  }
+
+  // Listen for the toggle check/uncheck to toggle the dark theme
+  toggleChange(ev: ToggleCustomEvent) {
+    this.toggleDarkTheme(ev.detail.checked);
+  }
+
+  // Add or remove the "dark" class on the document body
+  async toggleDarkTheme(shouldAdd: boolean) {
+    document.body.classList.toggle('dark', shouldAdd);
+    await Preferences.set({
+      key: 'theme',
+      value: shouldAdd ? 'dark' : 'light',
     });
   }
 

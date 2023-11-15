@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-item>
+    <ion-toggle
+      [(ngModel)]="themeToggle"
+      (ionChange)="toggleChange($event)"
+      justify="space-between"
+      >Dark Mode</ion-toggle
+    >
+  </ion-item>
   <ion-accordion-group expand="inset">
     <!-- Update profile -->
     <ion-accordion value="first">
@@ -138,7 +146,7 @@
     <!-- Critical -->
     <ion-accordion>
       <ion-item slot="header">
-        <ion-text color="dark"><h5>Account</h5></ion-text>
+        <ion-text color="dark"><h5>Logout & Account removal</h5></ion-text>
       </ion-item>
       <div slot="content">
         <ion-button
