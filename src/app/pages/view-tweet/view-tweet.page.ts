@@ -61,5 +61,10 @@ export class ViewTweetPage implements OnInit {
       this.getTweet();
       this.getReplies();
     }
+   
+  }
+  getDeleteEvent() {
+    this.getTweet();
+    this.getReplies();
   }
 }

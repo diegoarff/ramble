@@ -19,7 +19,7 @@
     <h4>Replies</h4>
   </div>
   <ng-container *ngIf="replies.length > 0">
-    <app-tweet *ngFor="let reply of replies" [tweet]="reply"></app-tweet>
+    <app-tweet (deleteEvent)="getDeleteEvent()" *ngFor="let reply of replies" [tweet]="reply"></app-tweet>
   </ng-container>
   <div *ngIf="replies.length === 0">
     <ion-text color="medium">No replies yet</ion-text>

@@ -6,7 +6,7 @@ import { Preferences } from '@capacitor/preferences';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
 import { terminate } from '@angular/fire/firestore';
-
+import { Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
@@ -17,7 +17,7 @@ export class TweetComponent implements OnInit {
   private router = inject(Router);
   private tweetService = inject(TweetsService);
   private toastCtrl = inject(ToastController);
-
+  @Output() deleteEvent = new EventEmitter();
   @Input() tweet: ITweet = {} as ITweet;
   @ViewChild('popover') popover: any;
 
@@ -88,7 +88,7 @@ export class TweetComponent implements OnInit {
       if (res.status === 'success') {
         await toast.present();
         // Consider removing this for a better approach
-        window.location.reload();
+        this.deleteEvent.emit();
       }
     } catch (error) {
       console.log(error);
