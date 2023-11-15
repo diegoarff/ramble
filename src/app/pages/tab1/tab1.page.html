@@ -32,7 +32,10 @@
 
   <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll
+    *ngIf="tweets.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
