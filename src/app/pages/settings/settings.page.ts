@@ -2,7 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
-import { ToastController, ToggleCustomEvent } from '@ionic/angular';
+import {
+  LoadingController,
+  ToastController,
+  ToggleCustomEvent,
+} from '@ionic/angular';
+import { GetImageService } from 'src/app/services/get-image.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -18,9 +23,16 @@ export class SettingsPage implements OnInit {
   private formBuilder = inject(FormBuilder);
   private usersService = inject(UsersService);
   private toastCtrl = inject(ToastController);
+  private imageService = inject(GetImageService);
+  private loadingCtrl = inject(LoadingController);
 
   user = this.router.getCurrentNavigation()!.extras.state!['user'];
   themeToggle = false;
+  avatar: any = null;
+  validateIMG: boolean = false;
+  imgToUpload?: any = null;
+  blob: any = null;
+  loading: boolean = false;
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     name: {
@@ -58,6 +70,8 @@ export class SettingsPage implements OnInit {
   };
 
   ngOnInit() {
+    this.avatar = this.user.avatar;
+
     this.initializeDarkValue();
 
     this.profileForm = this.formBuilder.group({
@@ -131,10 +145,22 @@ export class SettingsPage implements OnInit {
     });
   }
 
+  async editAvatar() {
+    const res = await this.imageService.takePicture();
+    this.validateIMG = true;
+    if (res) {
+      this.avatar = res.image.dataUrl;
+      this.imgToUpload = res.image;
+      this.blob = res.blob;
+    }
+  }
+
   async updateProfile() {
     if (this.profileForm.invalid) {
       return;
     }
+
+    this.loading = true;
 
     const toast = await this.toastCtrl.create({
       message: 'Profile updated successfully',
@@ -144,8 +170,29 @@ export class SettingsPage implements OnInit {
       color: 'success',
     });
 
+    let avatar = '';
+
     try {
-      const res = await this.usersService.updateProfile(this.profileForm.value);
+      if (this.avatar && this.validateIMG == true) {
+        const loading = await this.loadingCtrl.create({
+          spinner: 'crescent',
+        });
+
+        await loading.present();
+        avatar = await this.imageService.uploadImage(
+          this.blob,
+          this.imgToUpload
+        );
+        await loading.dismiss();
+      } else {
+        avatar = this.avatar;
+      }
+
+      const res = await this.usersService.updateProfile({
+        ...this.profileForm.value,
+        avatar,
+      });
+
       if (res.status == 'success') {
         await toast.present();
 

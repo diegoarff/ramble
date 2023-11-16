@@ -66,6 +66,15 @@
             {{ getErrorMessage('bio') }}
           </ion-note>
 
+          <div class="image-container" *ngIf="avatar">
+            <img [src]="avatar" class="avatar" alt="image" />
+            <ion-fab class="edit-image-btn">
+              <ion-fab-button (click)="editAvatar()" size="small">
+                <ion-icon name="pencil"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+          </div>
+
           <ion-button
             type="submit"
             [disabled]="profileForm.invalid"
