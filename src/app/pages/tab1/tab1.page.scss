@@ -1,3 +1,4 @@
-ion-fab {
-  margin-bottom: var(--ion-safe-area-bottom, 0);
+ion-fab-button[slot='end'] {
+  margin-right: 1rem;
+  margin-top: 0.75rem;
 }

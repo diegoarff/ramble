@@ -1,6 +1,15 @@
 .chips {
   display: flex;
   justify-content: space-around;
-  padding: 16px;
-  border-bottom: 1px solid #333333;
+  padding: 1rem;
+  border-bottom: 1px solid var(--ion-color-light);
 }
+
+ion-searchbar {
+  --border-radius: 2rem;
+  --box-shadow: none;
+  --padding: 1rem;
+  --margin-left: 2rem;
+  --margin-right: 2rem;
+}
+

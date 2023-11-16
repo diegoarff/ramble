@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>Search</ion-title>
   </ion-toolbar>
@@ -21,8 +21,8 @@
     <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    
-    <div *ngIf="segment === 'rambles'">
+
+    <div class="content-container" *ngIf="segment === 'rambles'">
       <div class="chips">
         <ion-chip
           [color]="filter === 'latest' ? 'primary' : 'medium'"
@@ -50,28 +50,19 @@
         >
       </div>
 
-      <ion-text
-        *ngIf="tweets.length === 0"
-        color="medium"
-        class="ion-text-center"
-      >
-        No rambles
-      </ion-text>
+      <div class="no-content" *ngIf="tweets.length === 0">No rambles</div>
       <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
     </div>
 
-    <div *ngIf="segment === 'users'">
-      <ion-text
-        *ngIf="users.length === 0"
-        color="medium"
-        class="ion-text-center"
-      >
-        No users
-      </ion-text>
+    <div class="content-container" *ngIf="segment === 'users'">
+      <div class="no-content" *ngIf="users.length === 0">No users</div>
       <app-user *ngFor="let user of users" [user]="user"></app-user>
     </div>
   </ng-container>
-  <ion-infinite-scroll *ngIf="users.length > 0 || tweets.length > 0" (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll
+    *ngIf="users.length > 0 || tweets.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

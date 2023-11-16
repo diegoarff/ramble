@@ -47,7 +47,9 @@ export class TweetComponent implements OnInit {
     this.authUserId = value;
   }
 
-  redirectToUser() {
+  redirectToUser(event: Event) {
+    event.stopPropagation();
+
     if (this.tweet.user._id === this.authUserId) {
       this.router.navigate(['/my-profile']);
       return;
@@ -75,6 +77,8 @@ export class TweetComponent implements OnInit {
   }
 
   showOptions(event: any) {
+    event.stopPropagation();
+
     this.popover.event = event;
     this.popover.present();
   }
@@ -128,7 +132,9 @@ export class TweetComponent implements OnInit {
     }
   }
 
-  async sendToReply() {
+  async sendToReply(event: Event) {
+    event.stopPropagation();
+
     const res = await this.tweetService.getTweet(this.tweet.isReplyTo!);
 
     this.router.navigate(['/view-tweet', this.tweet.isReplyTo], {

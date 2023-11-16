@@ -25,6 +25,16 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+@font-face {
+  font-family: "Inter";
+  src: url(./assets/fonts/InterVariable.ttf) format("truetype-variations");
+  font-weight: 100 900;
+}
+
+html {
+  --ion-font-family: "Inter", sans-serif;
+}
+
 ion-button {
   --padding-top: 16px;
   --padding-bottom: 16px;
@@ -32,4 +42,35 @@ ion-button {
 
 ion-fab-button {
   --box-shadow: none;
+}
+
+ion-title {
+  font-weight: bold;
+}
+
+ion-segment-button {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+ion-fab[slot="fixed"] {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.content-container {
+  height: 100%;
+}
+
+.no-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--ion-color-medium);
+  font-weight: 500;
+  font-size: 1.25rem;
+  height: calc(100% - 4.55rem);
 }

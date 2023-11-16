@@ -1,46 +1,50 @@
-<div class="tweet-container">
-  <div class="header-popover">
-    <div class="tweet-header" (click)="redirectToUser()">
-      <div class="tweet-header-avatar">
-        <img src="{{ tweet.user.avatar }}" />
-      </div>
-      <div class="tweet-header-name">
-        <ion-text class="tweet-name">{{ tweet.user.name }}</ion-text>
-        <ion-text color="primary" class="tweet-username"
-          >@{{ tweet.user.username }}</ion-text
-        >
-      </div>
-    </div>
-    <div *ngIf="checkUser">
-      <ion-icon
-        name="ellipsis-vertical"
-        (click)="showOptions($event)"
-        size="large"
-      ></ion-icon>
-    </div>
+<div class="container" (click)="redirectToTweet()">
+  <div class="avatar">
+    <ion-avatar (click)="redirectToUser($event)">
+      <img [src]="tweet.user.avatar" />
+    </ion-avatar>
   </div>
-  <ion-text
-    class="replyLink"
-    *ngIf="tweet.isReplyTo"
-    color="medium"
-    (click)="sendToReply()"
-    >See what is this replying to</ion-text
-  >
-
-  <div (click)="redirectToTweet()">
-    <div class="tweet-content">
-      <ion-text>{{ tweet.content }}</ion-text>
-      <div class="image-container" *ngIf="tweet.image">
-        <img class="image" [src]="tweet.image" />
+  <div class="content">
+    <div class="header">
+      <div class="info">
+        <div class="user">
+          <ion-text class="name">{{ tweet.user.name }}</ion-text>
+          <ion-text color="primary" class="username"
+            >@{{ tweet.user.username }}</ion-text
+          >
+        </div>
+        <div class="replying" *ngIf="tweet.isReplyTo">
+          <ion-text color="medium">
+            Replying to
+            <ion-text color="primary" (click)="sendToReply($event)">
+              this ramble
+            </ion-text>
+          </ion-text>
+        </div>
+      </div>
+      <div class="popover" *ngIf="checkUser">
+        <ion-icon
+          color="medium"
+          name="ellipsis-vertical"
+          (click)="showOptions($event)"
+          size="small"
+          #event
+        ></ion-icon>
       </div>
     </div>
-    <div class="tweet-footer">
-      <div class="tweet-footer-buttons">
-        <div class="tweet-footer-icon">
+    <div class="text">
+      <ion-text>{{ tweet.content }}</ion-text>
+    </div>
+    <div class="image" *ngIf="tweet.image">
+      <img [src]="tweet.image" class="image" />
+    </div>
+    <div class="footer">
+      <div class="buttons">
+        <div class="button">
           <ion-icon name="chatbubble-outline" color="medium"></ion-icon>
           <ion-text color="medium">{{ tweet.replyCount }}</ion-text>
         </div>
-        <div class="tweet-footer-icon" (click)="likeTweet($event)">
+        <div class="button" (click)="likeTweet($event)">
           <ion-icon
             *ngIf="!tweet.liked"
             name="heart-outline"
@@ -52,7 +56,7 @@
           }}</ion-text>
         </div>
       </div>
-      <div class="tweet-footer-date">
+      <div class="date">
         <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
       </div>
     </div>

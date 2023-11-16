@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title> Home </ion-title>
     <ion-fab-button slot="end" (click)="redirectToProfile()" size="small">
@@ -24,13 +24,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-text *ngIf="tweets.length === 0" color="medium" class="ion-text-center">
-    No rambles
-  </ion-text>
-
-  <!-- Implement loading states -->
-
-  <app-tweet (reloadEvent)="loadTweets()" *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+  <div class="content-container">
+    <div class="no-content" *ngIf="tweets.length === 0">No rambles</div>
+    <app-tweet
+      (reloadEvent)="loadTweets()"
+      *ngFor="let tweet of tweets"
+      [tweet]="tweet"
+    ></app-tweet>
+  </div>
 
   <ion-infinite-scroll
     *ngIf="tweets.length > 0"
