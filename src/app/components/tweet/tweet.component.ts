@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
 import { Preferences } from '@capacitor/preferences';
-import { ModalController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
 import { terminate } from '@angular/fire/firestore';
 import { Output, EventEmitter } from '@angular/core';
@@ -17,6 +21,8 @@ export class TweetComponent implements OnInit {
   private router = inject(Router);
   private tweetService = inject(TweetsService);
   private toastCtrl = inject(ToastController);
+  private alertCtrl = inject(AlertController);
+
   @Output() reloadEvent = new EventEmitter();
   @Input() tweet: ITweet = {} as ITweet;
   @ViewChild('popover') popover: any;
@@ -73,6 +79,33 @@ export class TweetComponent implements OnInit {
     this.popover.present();
   }
 
+  presentAlert() {
+    this.alertCtrl
+      .create({
+        header: 'Delete Tweet',
+        message: 'Are you sure you want to delete this tweet?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              this.popover.dismiss();
+            },
+          },
+          {
+            text: 'Delete',
+            handler: async () => {
+              await this.deleteTweet();
+              await this.popover.dismiss();
+            },
+          },
+        ],
+      })
+      .then((alert) => {
+        alert.present();
+      });
+  }
+
   async deleteTweet() {
     const toast = await this.toastCtrl.create({
       message: 'Tweet deleted',
@@ -92,8 +125,6 @@ export class TweetComponent implements OnInit {
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      this.popover.dismiss();
     }
   }
 

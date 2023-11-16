@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
 import {
+  AlertController,
   LoadingController,
   ToastController,
   ToggleCustomEvent,
@@ -25,6 +26,7 @@ export class SettingsPage implements OnInit {
   private toastCtrl = inject(ToastController);
   private imageService = inject(GetImageService);
   private loadingCtrl = inject(LoadingController);
+  private alertCtrl = inject(AlertController);
 
   user = this.router.getCurrentNavigation()!.extras.state!['user'];
   themeToggle = false;
@@ -234,6 +236,27 @@ export class SettingsPage implements OnInit {
   logout() {
     this.usersService.logout();
     this.router.navigate(['/login']);
+  }
+
+  presentAlert() {
+    this.alertCtrl
+      .create({
+        header: 'Warning',
+        message: 'Are you sure you want to delete your account? This action is irreversable.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Delete',
+            handler: () => {
+              this.deleteAccount();
+            },
+          },
+        ],
+      })
+      .then((alert) => alert.present());
   }
 
   async deleteAccount() {
