@@ -8,20 +8,29 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <app-tweet *ngIf="tweet" [tweet]="tweet"></app-tweet>
+
+  <div>
+    <h4>Replies</h4>
+  </div>
+  <ng-container *ngIf="replies.length > 0">
+    <app-tweet
+      (reloadEvent)="loadData()"
+      *ngFor="let reply of replies"
+      [tweet]="reply"
+    ></app-tweet>
+  </ng-container>
+  <div *ngIf="replies.length === 0">
+    <ion-text color="medium">No replies yet</ion-text>
+  </div>
+
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="reply()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <app-tweet *ngIf="tweet" [tweet]="tweet"></app-tweet>
-  <div>
-    <h4>Replies</h4>
-  </div>
-  <ng-container *ngIf="replies.length > 0">
-    <app-tweet (reloadEvent)="loadData()" *ngFor="let reply of replies" [tweet]="reply"></app-tweet>
-  </ng-container>
-  <div *ngIf="replies.length === 0">
-    <ion-text color="medium">No replies yet</ion-text>
-  </div>
 </ion-content>

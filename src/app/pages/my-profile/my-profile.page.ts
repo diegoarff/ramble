@@ -13,9 +13,6 @@ export class MyProfilePage implements OnInit {
   private usersService = inject(UsersService);
   user: IUserWithCounts | null = null;
 
-
-  constructor() {}
-
   ngOnInit() {
     this.getProfile();
   }
@@ -24,9 +21,13 @@ export class MyProfilePage implements OnInit {
     const res = await this.usersService.getMe();
     if (res.status === 'success') {
       this.user = res.data;
-    } else {
-      // show alert
     }
+  }
+
+  gotoFollows(filter: string) {
+    this.router.navigate(['/view-follows', this.user?._id], {
+      state: { filter, userId: this.user?._id },
+    });
   }
 
   redirectToSettings() {

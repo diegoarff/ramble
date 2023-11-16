@@ -49,6 +49,11 @@ export class ViewTweetPage implements OnInit {
     await this.getTweet();
   }
 
+  onRefresh(event: any) {
+    this.loadData();
+    event.target.complete();
+  }
+
   async reply() {
     const modal = await this.modalCtrl.create({
       component: ModalCreateTweetComponent,

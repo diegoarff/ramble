@@ -23,8 +23,12 @@
       <ion-text color="medium">Joined in {{user.createdAt | date }} </ion-text>
     </div>
     <div class="user-footer">
-      <ion-text>{{ user.followingCount }} Following</ion-text>
-      <ion-text>{{ user.followersCount }} Followers</ion-text>
+      <ion-text (click)="gotoFollows('following')"
+        >{{ user.followingCount }} Following</ion-text
+      >
+      <ion-text (click)="gotoFollows('followers')"
+        >{{ user.followersCount }} Followers</ion-text
+      >
     </div>
   </div>
   <app-user-segments *ngIf="user" [userId]="user._id"></app-user-segments>
