@@ -6,7 +6,7 @@
 }
 
 .avatar-container img {
-  width: 3.5rem;
+  width: 2.8rem;
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
@@ -52,6 +52,7 @@
 
 .image img {
   max-width: 100%;
+  min-height: 300px;
   max-height: 500px;
   border-radius: 16px;
 }

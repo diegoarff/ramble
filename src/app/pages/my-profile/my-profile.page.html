@@ -7,43 +7,21 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <!-- <div *ngIf="user" class="user-container">
-    <div class="user-header">
-      <div>
-        <img class="avatar" src="{{ user.avatar }}" />
-      </div>
-      <ion-button (click)="redirectToSettings()">Settings</ion-button>
-    </div>
-    <div class="user-content">
-      <div class="name">
-        <ion-text> {{ user.name }} </ion-text>
-        <ion-text color="medium"> @{{ user.username }} </ion-text>
-      </div>
-      <ion-text class="bio">{{ user.bio }}</ion-text>
-      <ion-text color="medium">Joined in {{user.createdAt | date }} </ion-text>
-    </div>
-    <div class="user-footer">
-      <ion-text (click)="gotoFollows('following')"
-        >{{ user.followingCount }} Following</ion-text
-      >
-      <ion-text (click)="gotoFollows('followers')"
-        >{{ user.followersCount }} Followers</ion-text
-      >
-    </div>
-  </div> -->
   <div *ngIf="user" class="container">
     <div class="header">
       <div class="image">
         <img src="{{ user.avatar }}" />
       </div>
     </div>
-    <div class="content">
-      <div class="info">
+    <div class="info">
+      <div class="inner">
         <ion-text class="name">{{ user.name }}</ion-text>
         <ion-text class="username" color="primary">
           @{{ user.username }}</ion-text
         >
       </div>
+    </div>
+    <div class="content">
       <div class="bio">
         <ion-text>{{ user.bio }}</ion-text>
       </div>
