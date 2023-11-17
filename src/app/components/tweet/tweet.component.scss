@@ -52,7 +52,7 @@
 
 .image img {
   max-width: 100%;
-  min-height: 300px;
+  min-height: 100px;
   max-height: 500px;
   border-radius: 16px;
 }
@@ -60,7 +60,7 @@
 .footer {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .buttons {
@@ -85,15 +85,38 @@
 .extra {
   display: flex;
   gap: 1.5rem;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .edited {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   gap: 0.3rem;
 
   ion-icon {
     font-size: 1.1rem;
   }
+}
+
+.popover-viewport {
+  width: min-content;
+}
+
+.popover-container {
+  font-size: 1rem;
+  color: var(--ion-color-dark);
+}
+
+.popover-slot {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.popover-slot:first-child {
+  border-bottom: 1px solid var(--ion-color-light);
+}
+
+ion-popover::part(content) {
+  --width: 9rem;
 }

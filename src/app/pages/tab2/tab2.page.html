@@ -22,7 +22,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <div class="content-container" *ngIf="segment === 'rambles'">
+    <ng-container *ngIf="segment === 'rambles'">
       <div class="chips">
         <ion-chip
           [color]="filter === 'latest' ? 'primary' : 'medium'"
@@ -49,15 +49,26 @@
           >Media</ion-chip
         >
       </div>
-
-      <div class="no-content" *ngIf="tweets.length === 0">No rambles</div>
       <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+    </ng-container>
+
+    <div
+      class="content-container"
+      *ngIf="segment === 'rambles' && tweets.length === 0"
+    >
+      <div class="no-content">No rambles</div>
     </div>
 
-    <div class="content-container" *ngIf="segment === 'users'">
-      <div class="no-content" *ngIf="users.length === 0">No users</div>
-      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    <div
+      class="content-container"
+      *ngIf="segment === 'users' && users.length === 0"
+    >
+      <div class="no-content">No users</div>
     </div>
+
+    <ng-container *ngIf="segment === 'users'">
+      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    </ng-container>
   </ng-container>
   <ion-infinite-scroll
     *ngIf="users.length > 0 || tweets.length > 0"

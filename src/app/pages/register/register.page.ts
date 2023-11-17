@@ -96,6 +96,21 @@ export class RegisterPage implements OnInit {
       return;
     }
 
+    if (
+      this.registerForm.get('password')?.value !==
+      this.registerForm.get('confirm_password')?.value
+    ) {
+      const toast = await this.toastCtrl.create({
+        message: 'Passwords do not match',
+        duration: 2000,
+        position: 'bottom',
+        icon: 'alert-circle-outline',
+        color: 'danger',
+      });
+      await toast.present();
+      return;
+    }
+
     const toast = await this.toastCtrl.create({
       message: 'Registration successful',
       duration: 2000,
@@ -109,6 +124,7 @@ export class RegisterPage implements OnInit {
 
       if (res.status == 'success') {
         await toast.present();
+        this.registerForm.reset();
 
         this.router.navigate(['/login']);
       }

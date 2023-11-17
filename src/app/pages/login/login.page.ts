@@ -20,9 +20,9 @@ export class LoginPage implements OnInit {
 
   errorMessages: { [key: string]: { [key: string]: string } } = {
     identifier: {
-      required: 'identifier is required',
-      minlength: 'identifier must be at least 2 characters',
-      maxlength: 'identifier cannot be more than 25 characters',
+      required: 'Identifier is required',
+      minlength: 'Identifier must be at least 2 characters',
+      maxlength: 'Identifier cannot be more than 25 characters',
     },
     password: {
       required: 'Password is required',
