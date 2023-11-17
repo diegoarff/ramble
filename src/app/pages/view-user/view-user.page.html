@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -54,9 +54,9 @@
         You can't see @{{user.username}}'s posts</ion-text
       >
     </div>
-    <app-user-segments
-      *ngIf="!user.hasMeBlocked && !user.blocked"
-      [userId]="userId"
-    ></app-user-segments>
   </div>
+  <app-user-segments
+    *ngIf="user && !user.hasMeBlocked && !user.blocked"
+    [userId]="userId"
+  ></app-user-segments>
 </ion-content>

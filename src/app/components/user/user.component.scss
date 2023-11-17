@@ -1,59 +1,41 @@
-// <div class="user-container">
-//   <div class="user-header">
-//     <div class="user-header-avatar">
+// <div class="container" (click)="redirectToUser()">
+//   <div class="header">
+//     <ion-avatar class="avatar">
 //       <img src="{{ user.avatar }}" />
-//     </div>
-//     <div class="user-header-name">
-//       <p class="user-name">{{ user.name }}</p>
-//       <p class="user-username">#{{ user.username }}</p>
+//     </ion-avatar>
+//     <div class="info">
+//       <ion-text class="name">{{ user.name }}</ion-text>
+//       <ion-text color="primary" class="username"
+//         >@{{ user.username }}</ion-text
+//       >
 //     </div>
 //   </div>
-//   <div class="user-content">
+//   <div class="bio">
 //     <ion-text>{{ user.bio }}</ion-text>
 //   </div>
 // </div>
 
-.user-container {
+.container {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  margin: 0 10px;
-  border-bottom: 1px solid #333333;
-  margin-bottom: 10px;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid var(--ion-color-light);
+}
 
-  .user-header {
-    display: flex;
-    align-items: center;
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
 
-    .user-header-avatar {
-      margin-right: 10px;
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 1.1rem;
+}
 
-      img {
-        width: 50px;
-        aspect-ratio: 1;
-        border-radius: 50%;
-      }
-    }
-    .user-header-name {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-
-      .user-name {
-        font-size: 16px;
-        font-weight: bold;
-      }
-
-      .user-username {
-        font-size: 14px;
-      }
-    }
-  }
-  .user-content {
-    margin-top: 10px;
-
-    ion-text {
-      font-size: 16px;
-    }
-  }
+.name {
+  font-weight: bold;
 }

@@ -1,8 +1,8 @@
 <div class="container" (click)="redirectToTweet()">
   <div class="avatar">
-    <ion-avatar (click)="redirectToUser($event)">
+    <div class="avatar-container" (click)="redirectToUser($event)">
       <img [src]="tweet.user.avatar" />
-    </ion-avatar>
+    </div>
   </div>
   <div class="content">
     <div class="header">

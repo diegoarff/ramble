@@ -35,9 +35,16 @@ html {
   --ion-font-family: "Inter", sans-serif;
 }
 
+ion-header, ion-toolbar {
+  --background: var(--ion-background-color);
+}
+
 ion-button {
   --padding-top: 16px;
   --padding-bottom: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 1rem;
 }
 
 ion-fab-button {
