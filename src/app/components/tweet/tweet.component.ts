@@ -24,6 +24,8 @@ export class TweetComponent implements OnInit {
   private alertCtrl = inject(AlertController);
 
   @Output() reloadEvent = new EventEmitter();
+  @Output() editEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
   @Input() tweet: ITweet = {} as ITweet;
   @ViewChild('popover') popover: any;
 
@@ -32,7 +34,7 @@ export class TweetComponent implements OnInit {
   authUserId: string | null = '';
 
   ngOnInit() {
-    this.getUserID();
+    this.getUserId();
   }
 
   redirectToTweet() {
@@ -41,7 +43,7 @@ export class TweetComponent implements OnInit {
     });
   }
 
-  async getUserID() {
+  async getUserId() {
     const { value } = await Preferences.get({ key: 'userId' });
     this.checkUser = this.tweet.user._id == value;
     this.authUserId = value;
@@ -126,6 +128,7 @@ export class TweetComponent implements OnInit {
         await toast.present();
 
         this.reloadEvent.emit();
+        this.deleteEvent.emit();
       }
     } catch (error) {
       console.log(error);
@@ -157,6 +160,7 @@ export class TweetComponent implements OnInit {
     if (data) {
       this.popover.dismiss();
       this.reloadEvent.emit();
+      this.editEvent.emit();
     }
   }
 }

@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -12,20 +12,25 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <app-tweet *ngIf="tweet" [tweet]="tweet"></app-tweet>
+  <app-tweet
+    (editEvent)="onTweetEdit()"
+    (deleteEvent)="onTweetDelete()"
+    *ngIf="tweet"
+    [tweet]="tweet"
+  ></app-tweet>
 
-  <div>
+  <div class="replies">
     <h4>Replies</h4>
+    <ng-container *ngIf="replies.length > 0">
+      <app-tweet
+        (reloadEvent)="loadData()"
+        *ngFor="let reply of replies"
+        [tweet]="reply"
+      ></app-tweet>
+    </ng-container>
   </div>
-  <ng-container *ngIf="replies.length > 0">
-    <app-tweet
-      (reloadEvent)="loadData()"
-      *ngFor="let reply of replies"
-      [tweet]="reply"
-    ></app-tweet>
-  </ng-container>
-  <div *ngIf="replies.length === 0">
-    <ion-text color="medium">No replies yet</ion-text>
+  <div class="content-container" *ngIf="replies.length === 0">
+    <div class="no-content">No replies yet</div>
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">

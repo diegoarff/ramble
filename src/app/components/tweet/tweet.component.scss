@@ -73,3 +73,19 @@
 .button ion-icon {
   font-size: 1.25rem;
 }
+
+.extra {
+  display: flex;
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.edited {
+  display: flex;
+  align-items: end;
+  gap: 0.3rem;
+
+  ion-icon {
+    font-size: 1.1rem;
+  }
+}

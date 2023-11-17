@@ -14,6 +14,8 @@ export class ViewTweetPage implements OnInit {
   private tweetService = inject(TweetsService);
   private modalCtrl = inject(ModalController);
   private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+
   tweet: ITweet | null = null;
   replies: ITweet[] = [];
   tweetId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
@@ -47,6 +49,16 @@ export class ViewTweetPage implements OnInit {
   async loadData() {
     await this.getReplies();
     await this.getTweet();
+  }
+
+  onTweetEdit() {
+    this.getTweet();
+  }
+
+  onTweetDelete() {
+    this.router.navigate(['/tabs/tab1'], {
+      queryParams: { filterOut: this.tweetId },
+    });
   }
 
   onRefresh(event: any) {

@@ -56,7 +56,11 @@
           }}</ion-text>
         </div>
       </div>
-      <div class="date">
+      <div class="extra">
+        <div *ngIf="tweet.isEdited" class="edited">
+          <ion-icon name="create-outline" color="medium"></ion-icon>
+          <ion-text color="medium">Edited</ion-text>
+        </div>
         <ion-text color="medium">{{ tweet.createdAt | date }}</ion-text>
       </div>
     </div>
