@@ -30,7 +30,6 @@ export class ModalCreateTweetComponent implements OnInit {
   loading: boolean = false;
 
   ngOnInit() {
-    console.log(this.tweetId);
     this.createTweetForm = this.formBuilder.group({
       content: ['', [Validators.required]],
     });

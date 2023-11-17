@@ -35,7 +35,7 @@ export class Tab2Page {
         filter: this.filter,
         page: this.page,
       });
-      this.tweets = res.data;
+      this.tweets = res.data;      
     }
 
     if (this.segment === 'users') {
@@ -52,6 +52,10 @@ export class Tab2Page {
   async handleInput(event: SearchbarCustomEvent) {
     this.query = event.target.value?.toLowerCase();
     await this.loadSearchData();
+  }
+
+  onSegmentChange() {
+    this.loadSearchData();
   }
 
   onRefresh(event: any) {

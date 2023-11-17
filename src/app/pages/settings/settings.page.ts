@@ -210,6 +210,21 @@ export class SettingsPage implements OnInit {
       return;
     }
 
+    if (
+      this.passwordForm.get('newPassword')?.value !==
+      this.passwordForm.get('confirmNewPassword')?.value
+    ) {
+      const toast = await this.toastCtrl.create({
+        message: 'Passwords do not match',
+        duration: 2000,
+        position: 'bottom',
+        icon: 'alert-circle-outline',
+        color: 'danger',
+      });
+      await toast.present();
+      return;
+    }
+
     const toast = await this.toastCtrl.create({
       message: 'Password changed successfully',
       duration: 2000,

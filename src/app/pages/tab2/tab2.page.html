@@ -9,7 +9,7 @@
     ></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="segment">
+    <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChange()">
       <ion-segment-button value="rambles"> Rambles </ion-segment-button>
       <ion-segment-button value="users"> Users </ion-segment-button>
     </ion-segment>

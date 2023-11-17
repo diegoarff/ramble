@@ -6,37 +6,40 @@ import {
   ref,
   uploadBytes,
 } from '@angular/fire/storage';
-import { Injectable } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Injectable, inject } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GetImageService {
-  constructor(private firestore: Firestore, private storage: Storage) {}
+  private storage = inject(Storage);
+  private toastCtrl = inject(ToastController);
 
   async takePicture() {
     try {
       if (Capacitor.getPlatform() != 'web') await Camera.requestPermissions();
       const image = await Camera.getPhoto({
         quality: 90,
-        // allowEditing: false,
         source: CameraSource.Prompt,
         resultType: CameraResultType.DataUrl,
       });
-      console.log('image: ', image);
       const blob = this.dataURLtoBlob(image.dataUrl);
-      console.log('blob: ', blob.size);
 
       // si la imagen es mayor a 3mb no se sube
       if (blob.size > 3 * 1024 * 1024) {
-        console.log('Image is too large');
+        const toast = await this.toastCtrl.create({
+          icon: 'alert-circle-outline',
+          color: 'danger',
+          message: 'Image too large. Try again with a smaller image.',
+          duration: 3000,
+        });
+        await toast.present();
         return undefined;
       }
 
       return { blob, image };
     } catch (e) {
-      console.log(e);
       return undefined;
     }
   }
@@ -59,7 +62,6 @@ export class GetImageService {
       const filePath = `test/${currentDate}.${image.format}`;
       const fileRef = ref(this.storage, filePath);
       const task = await uploadBytes(fileRef, blob);
-      console.log('task: ', task);
       const url = getDownloadURL(fileRef);
       return url;
     } catch (e) {

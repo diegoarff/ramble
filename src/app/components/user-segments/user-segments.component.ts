@@ -41,8 +41,6 @@ export class UserSegmentsComponent implements OnInit {
   }
 
   async loadTweets() {
-    console.log(this.segment);
-    console.log(this.segments);
     const res = await this.segments
       .find((segment: any) => segment.name === this.segment).function(this.userId)
 

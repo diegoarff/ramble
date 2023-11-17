@@ -11,11 +11,17 @@
   <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-text *ngIf="users.length === 0" color="medium" class="ion-text-center">
-    No users
-  </ion-text>
+  
+  <div class="content-container">
+    <div class="no-content" *ngIf="users.length === 0">No users</div>
+  </div>
+
   <app-user *ngFor="let user of users" [user]="user"></app-user>
-  <ion-infinite-scroll *ngIf="users.length > 0" (ionInfinite)="loadMore($event)">
+
+  <ion-infinite-scroll
+    *ngIf="users.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
