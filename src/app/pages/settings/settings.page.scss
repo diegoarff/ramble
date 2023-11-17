@@ -41,6 +41,7 @@ ion-accordion {
 
 ion-accordion ion-item[slot="header"] {
   --padding-bottom: 0.45rem;
+  --background: var(--ion-color-step-50);
 }
 
 form {
