@@ -72,23 +72,6 @@
       </div>
 
       <div class="input">
-        <ion-input
-          fill="outline"
-          label="Confirm Password"
-          labelPlacement="floating"
-          type="password"
-          maxlength="15"
-          formControlName="confirm_password"
-        ></ion-input>
-        <ion-note
-          *ngIf="registerForm.get('confirm_password')?.invalid && registerForm.get('confirm_password')?.touched"
-          color="danger"
-        >
-          {{ getErrorMessage('confirm_password') }}
-        </ion-note>
-      </div>
-
-      <div class="input">
         <ion-textarea
           fill="outline"
           label="Biography"

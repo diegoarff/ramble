@@ -76,6 +76,8 @@ export class LoginPage implements OnInit {
         await Preferences.set({ key: 'token', value: res.data.token });
         await Preferences.set({ key: 'userId', value: res.data.userId });
 
+        this.loginForm.reset();
+
         this.router.navigate(['/tabs']);
       }
     } catch (error) {

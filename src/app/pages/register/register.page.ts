@@ -38,13 +38,6 @@ export class RegisterPage implements OnInit {
       maxlength: 'Password cannot be more than 50 characters',
       pattern: 'Password must contain at least one uppercase and one number',
     },
-    confirm_password: {
-      required: 'Confirm password is required',
-      minlength: 'Confirm password must be at least 8 characters',
-      maxlength: 'Confirm password cannot be more than 50 characters',
-      pattern:
-        'Confirm password must contain at least one uppercase and one number',
-    },
     bio: {
       maxlength: 'Bio cannot be more than 160 characters',
     },
@@ -78,36 +71,12 @@ export class RegisterPage implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/),
         ],
       ],
-      confirm_password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(50),
-          Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/),
-        ],
-      ],
       bio: ['', [Validators.maxLength(160)]],
     });
   }
 
   async register() {
     if (this.registerForm.invalid) {
-      return;
-    }
-
-    if (
-      this.registerForm.get('password')?.value !==
-      this.registerForm.get('confirm_password')?.value
-    ) {
-      const toast = await this.toastCtrl.create({
-        message: 'Passwords do not match',
-        duration: 2000,
-        position: 'bottom',
-        icon: 'alert-circle-outline',
-        color: 'danger',
-      });
-      await toast.present();
       return;
     }
 
