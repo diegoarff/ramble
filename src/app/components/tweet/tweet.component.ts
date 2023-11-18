@@ -88,7 +88,7 @@ export class TweetComponent implements OnInit {
   presentAlert() {
     this.alertCtrl
       .create({
-        header: 'Delete Tweet',
+        header: 'Delete Ramble',
         message: 'Are you sure you want to delete this tweet?',
         buttons: [
           {
@@ -114,7 +114,7 @@ export class TweetComponent implements OnInit {
 
   async deleteTweet() {
     const toast = await this.toastCtrl.create({
-      message: 'Tweet deleted',
+      message: 'Ramble deleted',
       duration: 2000,
       position: 'bottom',
       icon: 'checkmark-circle-outline',

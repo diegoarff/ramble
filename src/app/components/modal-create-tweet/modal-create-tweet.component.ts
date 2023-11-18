@@ -68,7 +68,7 @@ export class ModalCreateTweetComponent implements OnInit {
       const tweet = { content, image };
 
       const toast = await this.toastCtrl.create({
-        message: 'Tweet created',
+        message: 'Ramble created',
         duration: 2000,
         icon: 'checkmark-circle-outline',
         color: 'success',

@@ -80,7 +80,7 @@ export class ModalEditTweetComponent implements OnInit {
       const tweet = { content, image };
 
       const toast = await this.toastCtrl.create({
-        message: 'Tweet edited',
+        message: 'Ramble edited',
         duration: 2000,
         icon: 'checkmark-circle-outline',
         color: 'success',
@@ -103,7 +103,7 @@ export class ModalEditTweetComponent implements OnInit {
   }
 
   removeImage() {
-    this.image = null;
+    this.image = '';
     this.firebaseImage = null;
     this.blob = null;
   }

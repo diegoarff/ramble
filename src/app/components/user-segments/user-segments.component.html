@@ -13,9 +13,9 @@
 </div>
 
 <app-tweet
-  (reloadEvent)="loadTweets()"
-  *ngFor="let tweet of tweets"
-  [tweet]="tweet"
+(reloadEvent)="loadTweets()"
+*ngFor="let tweet of tweets"
+[tweet]="tweet"
 ></app-tweet>
 
 <ion-infinite-scroll *ngIf="tweets.length > 0" (ionInfinite)="loadMore($event)">

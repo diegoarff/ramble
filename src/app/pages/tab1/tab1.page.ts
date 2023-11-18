@@ -64,12 +64,16 @@ export class Tab1Page implements OnInit {
   async loadTweets() {
     if (this.segment === 'recent') {
       const res = await this.tweetsService.getRecentTweets();
-      this.tweets = res.data;
+      if (res.status === 'success') {
+        this.tweets = res.data;
+      }
     }
 
     if (this.segment === 'following') {
       const res = await this.tweetsService.getFollowingTweets();
-      this.tweets = res.data;
+      if (res.status === 'success') {
+        this.tweets = res.data;
+      }
     }
   }
 

@@ -24,15 +24,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <app-tweet
-    (reloadEvent)="loadTweets()"
-    *ngFor="let tweet of tweets"
-    [tweet]="tweet"
-  ></app-tweet>
-
-  <div class="content-container">
-    <div class="no-content" *ngIf="tweets.length === 0">No rambles</div>
+  <div class="content-container" *ngIf="tweets.length === 0">
+    <div class="no-content">No rambles</div>
   </div>
+
+  <ng-container>
+    <app-tweet
+      (reloadEvent)="loadTweets()"
+      *ngFor="let tweet of tweets"
+      [tweet]="tweet"
+    ></app-tweet>
+  </ng-container>
 
   <ion-infinite-scroll
     *ngIf="tweets.length > 0"
