@@ -1,24 +1,28 @@
-<ion-header>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      [debounce]="1500"
+      [debounce]="800"
       (ionInput)="handleInput($event)"
     ></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="onSegmentChange()">
+      <ion-segment-button value="rambles"> Rambles </ion-segment-button>
+      <ion-segment-button value="users"> Users </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ng-container>
-    <ion-segment [(ngModel)]="segment">
-      <ion-segment-button value="rambles"> Rambles </ion-segment-button>
-      <ion-segment-button value="users"> Users </ion-segment-button>
-    </ion-segment>
-
     <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    
-    <div *ngIf="segment === 'rambles'">
+
+    <ng-container *ngIf="segment === 'rambles'">
       <div class="chips">
         <ion-chip
           [color]="filter === 'latest' ? 'primary' : 'medium'"
@@ -45,29 +49,31 @@
           >Media</ion-chip
         >
       </div>
-
-      <ion-text
-        *ngIf="tweets.length === 0"
-        color="medium"
-        class="ion-text-center"
-      >
-        No rambles
-      </ion-text>
       <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet>
+    </ng-container>
+
+    <div
+      class="content-container"
+      *ngIf="segment === 'rambles' && tweets.length === 0"
+    >
+      <div class="no-content">No rambles</div>
     </div>
 
-    <div *ngIf="segment === 'users'">
-      <ion-text
-        *ngIf="users.length === 0"
-        color="medium"
-        class="ion-text-center"
-      >
-        No users
-      </ion-text>
-      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    <div
+      class="content-container"
+      *ngIf="segment === 'users' && users.length === 0"
+    >
+      <div class="no-content">No users</div>
     </div>
+
+    <ng-container *ngIf="segment === 'users'">
+      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    </ng-container>
   </ng-container>
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll
+    *ngIf="users.length > 0 || tweets.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

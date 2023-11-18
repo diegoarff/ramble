@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -7,12 +7,21 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-  <div>
-    <ion-text *ngIf="data.length === 0" color="medium" class="ion-text-center">
-      No users
-    </ion-text>
-    <app-user *ngFor="let user of data" [user]="user"></app-user>
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($any($event))">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <div class="content-container">
+    <div class="no-content" *ngIf="users.length === 0">No users</div>
   </div>
+
+  <app-user *ngFor="let user of users" [user]="user"></app-user>
+
+  <ion-infinite-scroll
+    *ngIf="users.length > 0"
+    (ionInfinite)="loadMore($event)"
+  >
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

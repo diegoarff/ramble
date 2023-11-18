@@ -1,102 +1,104 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
-  <form (ngSubmit)="register()" [formGroup]="registerForm">
-    <ion-input
-      fill="solid"
-      label="Name"
-      labelPlacement="floating"
-      type="text"
-      formControlName="name"
-    ></ion-input>
-    <ion-note
-      *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
-      color="danger"
+<ion-content>
+  <div class="container">
+    <h1 class="title">Ramble</h1>
+    <h2 class="subtitle">Sign up</h2>
+    <ion-text color="medium" class="text"
+      >Create your account and start rambling</ion-text
     >
-      {{ getErrorMessage('name') }}
-    </ion-note>
+    <form (ngSubmit)="register()" [formGroup]="registerForm">
+      <div class="input">
+        <ion-input
+          fill="outline"
+          label="Name"
+          labelPlacement="floating"
+          type="text"
+          formControlName="name"
+        ></ion-input>
+        <ion-note
+          *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+          color="danger"
+        >
+          {{ getErrorMessage('name') }}
+        </ion-note>
+      </div>
 
-    <ion-input
-      fill="solid"
-      label="Username"
-      labelPlacement="floating"
-      type="text"
-      formControlName="username"
-    ></ion-input>
-    <ion-note
-      *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
-      color="danger"
-    >
-      {{ getErrorMessage('username') }}
-    </ion-note>
+      <div class="input">
+        <ion-input
+          fill="outline"
+          label="Username"
+          labelPlacement="floating"
+          type="text"
+          formControlName="username"
+        ></ion-input>
+        <ion-note
+          *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+          color="danger"
+        >
+          {{ getErrorMessage('username') }}
+        </ion-note>
+      </div>
 
-    <ion-input
-      fill="solid"
-      label="Email"
-      labelPlacement="floating"
-      type="email"
-      formControlName="email"
-    ></ion-input>
-    <ion-note
-      *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-      color="danger"
-    >
-      {{ getErrorMessage('email') }}
-    </ion-note>
+      <div class="input">
+        <ion-input
+          fill="outline"
+          label="Email"
+          labelPlacement="floating"
+          type="email"
+          formControlName="email"
+        ></ion-input>
+        <ion-note
+          *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+          color="danger"
+        >
+          {{ getErrorMessage('email') }}
+        </ion-note>
+      </div>
 
-    <ion-input
-      fill="solid"
-      label="Password"
-      labelPlacement="floating"
-      type="password"
-      maxlength="15"
-      [counter]="true"
-      formControlName="password"
-    ></ion-input>
-    <ion-note
-      *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
-      color="danger"
-    >
-      {{ getErrorMessage('password') }}
-    </ion-note>
+      <div class="input">
+        <ion-input
+          fill="outline"
+          label="Password"
+          labelPlacement="floating"
+          type="password"
+          maxlength="15"
+          formControlName="password"
+        ></ion-input>
+        <ion-note
+          *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          color="danger"
+        >
+          {{ getErrorMessage('password') }}
+        </ion-note>
+      </div>
 
-    <ion-input
-      fill="solid"
-      label="Confirm Password"
-      labelPlacement="floating"
-      type="password"
-      maxlength="15"
-      [counter]="true"
-      formControlName="confirm_password"
-    ></ion-input>
-    <ion-note
-      *ngIf="registerForm.get('confirm_password')?.invalid && registerForm.get('confirm_password')?.touched"
-      color="danger"
-    >
-      {{ getErrorMessage('confirm_password') }}
-    </ion-note>
+      <div class="input">
+        <ion-textarea
+          fill="outline"
+          label="Biography"
+          labelPlacement="floating"
+          maxlength="100"
+          autoGrow="true"
+          formControlName="bio"
+        ></ion-textarea>
+        <ion-note
+          *ngIf="registerForm.get('bio')?.invalid && registerForm.get('bio')?.touched"
+          color="danger"
+        >
+          {{ getErrorMessage('bio') }}
+        </ion-note>
+      </div>
 
-    <ion-textarea
-      fill="solid"
-      label="Biography"
-      labelPlacement="floating"
-      [counter]="true"
-      maxlength="160"
-      formControlName="bio"
-    ></ion-textarea>
-    <ion-note
-      *ngIf="registerForm.get('bio')?.invalid && registerForm.get('bio')?.touched"
-      color="danger"
+      <ion-button
+        shape="round"
+        type="submit"
+        expand="block"
+        [disabled]="registerForm.invalid"
+        >Register</ion-button
+      >
+    </form>
+    <ion-text color="medium"
+      >Already have an account?
+      <a [routerLink]="['/login']">Sign in</a></ion-text
     >
-      {{ getErrorMessage('bio') }}
-    </ion-note>
-
-    <ion-button type="submit" [disabled]="registerForm.invalid"
-      >Register</ion-button
-    >
-  </form>
+  </div>
 </ion-content>
-<p>Already have an account? <a [routerLink]="['/login']">Login</a></p>

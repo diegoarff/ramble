@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalCreateTweetComponent } from 'src/app/components/modal-create-tweet/modal-create-tweet.component';
 import { ITweet } from 'src/app/interfaces/Tweets';
@@ -11,33 +11,66 @@ import { TweetsService } from 'src/app/services/tweets.service';
   styleUrls: ['./view-tweet.page.scss'],
 })
 export class ViewTweetPage implements OnInit {
-  private router = inject(Router);
   private tweetService = inject(TweetsService);
   private modalCtrl = inject(ModalController);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
 
+  tweet: ITweet | null = null;
   replies: ITweet[] = [];
-
-  constructor() {}
-  tweet: ITweet = this.router.getCurrentNavigation()!.extras.state!['tweet'];
+  tweetId: string | null = this.activatedRoute.snapshot.paramMap.get('id');
 
   ngOnInit() {
-    this.getReplies();
+    this.loadData();
+  }
+
+  async getTweet() {
+    try {
+      const res = await this.tweetService.getTweet(this.tweetId!);
+      if (res.status === 'success') {
+        this.tweet = res.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getReplies() {
-    const res = await this.tweetService.getRepliesFromTweet(this.tweet._id!);
-    if (res.status === 'success') {
-      this.replies = res.data;
-    } else {
-      // show alert
+    try {
+      const res = await this.tweetService.getRepliesFromTweet(this.tweetId!);
+      if (res.status === 'success') {
+        this.replies = res.data;
+      }
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  async loadData() {
+    await this.getReplies();
+    await this.getTweet();
+  }
+
+  onTweetEdit() {
+    this.getTweet();
+  }
+
+  onTweetDelete() {
+    this.router.navigate(['/tabs/tab1'], {
+      queryParams: { filterOut: this.tweetId },
+    });
+  }
+
+  onRefresh(event: any) {
+    this.loadData();
+    event.target.complete();
   }
 
   async reply() {
     const modal = await this.modalCtrl.create({
       component: ModalCreateTweetComponent,
       componentProps: {
-        tweetId: this.tweet._id,
+        tweetId: this.tweetId,
       },
     });
 
@@ -46,7 +79,7 @@ export class ViewTweetPage implements OnInit {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      this.getReplies();
+      await this.loadData();
     }
   }
 }

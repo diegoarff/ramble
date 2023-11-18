@@ -13,10 +13,11 @@ import { environment } from 'src/environments/environment';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { SharedServicesModule } from './services/shared-services.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Drivers } from '@ionic/storage';
 import { SharedComponentsModule } from './components/shared-components.module';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RequestInterceptor } from './interceptors/request.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { SharedComponentsModule } from './components/shared-components.module';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
 })

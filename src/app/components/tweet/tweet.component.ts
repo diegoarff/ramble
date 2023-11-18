@@ -3,10 +3,14 @@ import { Router } from '@angular/router';
 import { ITweet } from 'src/app/interfaces/Tweets';
 import { TweetsService } from 'src/app/services/tweets.service';
 import { Preferences } from '@capacitor/preferences';
-import { ModalController } from '@ionic/angular';
+import {
+  AlertController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { ModalEditTweetComponent } from '../modal-edit-tweet/modal-edit-tweet.component';
 import { terminate } from '@angular/fire/firestore';
-
+import { Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
@@ -16,15 +20,21 @@ export class TweetComponent implements OnInit {
   private modalCtrl = inject(ModalController);
   private router = inject(Router);
   private tweetService = inject(TweetsService);
+  private toastCtrl = inject(ToastController);
+  private alertCtrl = inject(AlertController);
+
+  @Output() reloadEvent = new EventEmitter();
+  @Output() editEvent = new EventEmitter();
+  @Output() deleteEvent = new EventEmitter();
   @Input() tweet: ITweet = {} as ITweet;
+  @ViewChild('popover') popover: any;
+
   loading: boolean = false;
   checkUser: boolean = false;
   authUserId: string | null = '';
 
-  @ViewChild('popover') popover: any;
   ngOnInit() {
-    this.getUserID();
-    console.log(this.tweet);
+    this.getUserId();
   }
 
   redirectToTweet() {
@@ -33,13 +43,15 @@ export class TweetComponent implements OnInit {
     });
   }
 
-  async getUserID() {
+  async getUserId() {
     const { value } = await Preferences.get({ key: 'userId' });
     this.checkUser = this.tweet.user._id == value;
     this.authUserId = value;
   }
 
-  redirectToUser() {
+  redirectToUser(event: Event) {
+    event.stopPropagation();
+
     if (this.tweet.user._id === this.authUserId) {
       this.router.navigate(['/my-profile']);
       return;
@@ -48,7 +60,8 @@ export class TweetComponent implements OnInit {
     this.router.navigate(['/view-user', this.tweet.user._id]);
   }
 
-  async likeTweet() {
+  async likeTweet(event: Event) {
+    event.stopPropagation();
     if (this.loading) return;
     this.loading = true;
     const res = await this.tweetService.likeTweet(this.tweet._id!);
@@ -66,19 +79,65 @@ export class TweetComponent implements OnInit {
   }
 
   showOptions(event: any) {
+    event.stopPropagation();
+
     this.popover.event = event;
     this.popover.present();
   }
 
-  async deleteTweet() {
-    const res = await this.tweetService.deleteTweet(this.tweet._id);
-    if (res.status === 'success') {
-      window.location.reload();
-    }
-    this.popover.dismiss();
+  presentAlert() {
+    this.alertCtrl
+      .create({
+        header: 'Delete Ramble',
+        message: 'Are you sure you want to delete this tweet?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              this.popover.dismiss();
+            },
+          },
+          {
+            text: 'Delete',
+            handler: async () => {
+              await this.deleteTweet();
+              await this.popover.dismiss();
+            },
+          },
+        ],
+      })
+      .then((alert) => {
+        alert.present();
+      });
   }
 
-  async sendToReply() {
+  async deleteTweet() {
+    const toast = await this.toastCtrl.create({
+      message: 'Ramble deleted',
+      duration: 2000,
+      position: 'bottom',
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+    });
+
+    try {
+      const res = await this.tweetService.deleteTweet(this.tweet._id);
+
+      if (res.status === 'success') {
+        await toast.present();
+
+        this.reloadEvent.emit();
+        this.deleteEvent.emit();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async sendToReply(event: Event) {
+    event.stopPropagation();
+
     const res = await this.tweetService.getTweet(this.tweet.isReplyTo!);
 
     this.router.navigate(['/view-tweet', this.tweet.isReplyTo], {
@@ -99,7 +158,9 @@ export class TweetComponent implements OnInit {
     const { data } = await modal.onWillDismiss();
 
     if (data) {
-      window.location.reload();
+      this.popover.dismiss();
+      this.reloadEvent.emit();
+      this.editEvent.emit();
     }
   }
 }

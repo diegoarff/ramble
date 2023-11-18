@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalCreateTweetComponent } from 'src/app/components/modal-create-tweet/modal-create-tweet.component';
 import { ITweet } from 'src/app/interfaces/Tweets';
@@ -11,14 +11,28 @@ import { TweetsService } from 'src/app/services/tweets.service';
   styleUrls: ['tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
-  tweetsService = inject(TweetsService);
-  modalCtrl = inject(ModalController);
-  router = inject(Router);
+  private tweetsService = inject(TweetsService);
+  private modalCtrl = inject(ModalController);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
   segment: string = 'recent';
   tweets: ITweet[] = [];
 
   ngOnInit() {
     this.loadTweets();
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (this.tweets.length === 0) {
+        return;
+      }
+
+      if (params['filterOut']) {
+        this.tweets = this.tweets.filter(
+          (tweet) => tweet._id !== params['filterOut']
+        );
+      }
+    });
   }
 
   async segmentChanged(event: any) {
@@ -50,12 +64,16 @@ export class Tab1Page implements OnInit {
   async loadTweets() {
     if (this.segment === 'recent') {
       const res = await this.tweetsService.getRecentTweets();
-      this.tweets = res.data;
+      if (res.status === 'success') {
+        this.tweets = res.data;
+      }
     }
 
     if (this.segment === 'following') {
       const res = await this.tweetsService.getFollowingTweets();
-      this.tweets = res.data;
+      if (res.status === 'success') {
+        this.tweets = res.data;
+      }
     }
   }
 

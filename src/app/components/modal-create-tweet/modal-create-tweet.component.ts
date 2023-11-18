@@ -1,6 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  ToastController,
+} from '@ionic/angular';
 import { GetImageService } from 'src/app/services/get-image.service';
 import { TweetsService } from 'src/app/services/tweets.service';
 
@@ -16,14 +20,16 @@ export class ModalCreateTweetComponent implements OnInit {
   private tweetsService = inject(TweetsService);
   private modalCtrl = inject(ModalController);
   private formBuilder = inject(FormBuilder);
+  private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
 
   tweetId: string = '';
   image: any = null;
   blob: any = null;
   content: any;
+  loading: boolean = false;
 
   ngOnInit() {
-    console.log(this.tweetId);
     this.createTweetForm = this.formBuilder.group({
       content: ['', [Validators.required]],
     });
@@ -38,24 +44,52 @@ export class ModalCreateTweetComponent implements OnInit {
   }
 
   async createTweet() {
-    if (this.createTweetForm.invalid) return;
+    if (this.createTweetForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
     const { content } = this.createTweetForm.value;
 
     let image = '';
 
-    if (this.image) {
-      image = await this.imageService.uploadImage(this.blob, this.image);
+    try {
+      if (this.image) {
+        const loading = await this.loadingCtrl.create({
+          spinner: 'crescent',
+        });
+
+        await loading.present();
+        image = await this.imageService.uploadImage(this.blob, this.image);
+        await loading.dismiss();
+      }
+
+      const tweet = { content, image };
+
+      const toast = await this.toastCtrl.create({
+        message: 'Ramble created',
+        duration: 2000,
+        icon: 'checkmark-circle-outline',
+        color: 'success',
+        position: 'bottom',
+      });
+
+      if (this.tweetId) {
+        await this.tweetsService.replyToTweet(this.tweetId, tweet);
+      } else {
+        await this.tweetsService.createTweet(tweet);
+      }
+
+      await toast.present();
+
+      this.loading = false;
+
+      return this.modalCtrl.dismiss(true);
+    } catch (error) {
+      console.log(error);
+      return;
     }
-
-    const tweet = { content, image };
-
-    if (this.tweetId) {
-      await this.tweetsService.replyToTweet(this.tweetId, tweet);
-    } else {
-      await this.tweetsService.createTweet(tweet);
-    }
-
-    return this.modalCtrl.dismiss(true);
   }
 
   dismissModal() {
